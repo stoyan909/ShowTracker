@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShowTracker.Data;
 
@@ -11,9 +12,11 @@ using ShowTracker.Data;
 namespace ShowTracker.Data.Migrations
 {
     [DbContext(typeof(ShowTrackerDbContext))]
-    partial class ShowTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260325213031_FixErrorWithTheSeasonOfEachEpisode")]
+    partial class FixErrorWithTheSeasonOfEachEpisode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -16,4 +16,8 @@
     <ProjectReference Include="..\ShowTracker.Data.Models\ShowTracker.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

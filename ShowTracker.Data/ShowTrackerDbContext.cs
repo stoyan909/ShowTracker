@@ -46,6 +46,8 @@ namespace ShowTracker.Data
                 .HasDefaultValue(false);
 
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShowTrackerDbContext).Assembly);
         }
     }
 }
