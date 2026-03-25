@@ -5,7 +5,7 @@
         public class EpisodesValidationConstants
         {
             public const int EpisodeTitleMinLength = 2;
-            public const int EpisodeTitleMaxLength = 40;
+            public const int EpisodeTitleMaxLength = 50;
         }
 
         public class ShowsValidationConstants
