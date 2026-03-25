@@ -6,7 +6,7 @@ namespace ShowTracker.Data.Models
     public class Season
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public int SeasonNumber { get; set; }

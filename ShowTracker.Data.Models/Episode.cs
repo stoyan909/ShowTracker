@@ -7,7 +7,7 @@ namespace ShowTracker.Data.Models
     public class Episode
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MinLength(EpisodeTitleMinLength)]
@@ -22,7 +22,7 @@ namespace ShowTracker.Data.Models
 
         [Required]
         [ForeignKey(nameof(Season))]
-        public int SeasonId { get; set; }
+        public Guid SeasonId { get; set; }
 
         public virtual Season Season { get; set; } = null!;
 
