@@ -19,6 +19,7 @@
     <ProjectReference Include="..\ShowTracker.Common\ShowTracker.Common.csproj" />
     <ProjectReference Include="..\ShowTracker.Data.Models\ShowTracker.Data.Models.csproj" />
     <ProjectReference Include="..\ShowTracker.Data\ShowTracker.Data.csproj" />
+    <ProjectReference Include="..\ShowTracker.Services.Core\ShowTracker.Services.Core.csproj" />
   </ItemGroup>
 
 </Project>
