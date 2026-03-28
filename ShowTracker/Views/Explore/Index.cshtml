@@ -1,0 +1,48 @@
+﻿@using ShowTracker.Data.Models
+@model IEnumerable<Show>
+
+@{
+    ViewBag.Title = "Shows";
+}
+
+<link rel="stylesheet" href="~/css/explore.css" />
+
+<div class="container">
+    <div class="grid">
+        @{
+            string[] files = Directory.GetFiles("wwwroot/ShowPics/");
+        }
+        @foreach (var show in Model)
+        {
+           <a href = "@Url.Action("Index", "Show", new{ id=show.Id })" class="card-link">
+            <div class="card">
+                @{
+                    string imageUrl = null;
+
+                    foreach (string images in files)
+                    {
+                        if (images.ToLower().Contains(show.Name.ToLower()))
+                        {
+                            imageUrl = images.Replace("wwwroot", "").Replace("\\", "/");
+                            break;
+                        }
+                    }
+                }
+
+                <img src="@(imageUrl ?? "/images/no-image.png")" class="poster" alt="@show.Name" />
+
+                <div class="info">
+                    <div>
+                        <div class="title">@show.Name</div>
+                        <div class="year">@show.Description</div>
+                    </div>
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <button class="follow-btn">+ Follow</button>
+                    }
+                        </div>
+                    </div>
+                </a>
+        }
+    </div>
+</div>
