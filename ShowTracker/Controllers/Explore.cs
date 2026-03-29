@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ShowTracker.Services.Core.Interfaces;
 
 namespace ShowTracker.Controllers
@@ -13,6 +14,7 @@ namespace ShowTracker.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await exploreServices.GetAllShowsAsync());

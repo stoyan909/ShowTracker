@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ShowTracker.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public abstract class BaseController : Controller
     {
         protected string? GetUserId()
