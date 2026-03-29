@@ -20,7 +20,8 @@ internal class Program
             .AddEntityFrameworkStores<ShowTrackerDbContext>();
 
         builder.Services.AddScoped<IExploreServices, ExploreServices>();
-        builder.Services.AddScoped<IShowServices, ShowServices>();
+        builder.Services.AddScoped<IShowServices, ShowServices>();     
+        builder.Services.AddScoped<IGeneralServices, GeneralServices>();
 
         builder.Services.AddControllersWithViews();
 

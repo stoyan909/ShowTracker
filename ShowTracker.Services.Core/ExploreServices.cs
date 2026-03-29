@@ -15,7 +15,7 @@ namespace ShowTracker.Services.Core
 
         public async Task<List<Show>> GetAllShowsAsync()
         {
-            List<Show> result = await dbContext.Shows.OrderBy(s => s.Name).ToListAsync();
+            List<Show> result = await dbContext.Shows.OrderBy(s => s.Name).Include(s=>s.Users).ToListAsync();
             return result;
         }
     }
