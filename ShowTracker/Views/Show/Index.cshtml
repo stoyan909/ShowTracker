@@ -5,4 +5,72 @@
     ViewBag.Title = "Show";
 }
 
-@Model.Name
+<link rel="stylesheet" href="~/css/show.css" />
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="show-header">
+
+        <div class="show-info">
+            <h1>@Model.Name</h1>
+            <p>@Model.Description</p>
+            @if (Model.Users.Count() != 0)
+            {
+                <a class="follow-btn" asp-controller="Show" asp-action="FollowShow" asp-route-id="@Model.Id">
+                    Unfollow
+                </a>
+            }
+            else
+            {
+                <a class="follow-btn" asp-controller="Show" asp-action="FollowShow" asp-route-id="@Model.Id">
+                    Follow
+                </a>
+            }
+        </div>
+    </div>
+
+    <!-- SEASONS -->
+    <div class="season-posters">
+        @for (int i = 1; i <= Model.Seasons.Count(); i++) 
+        {
+            <a asp-controller="Show" asp-action="Index" asp-route-id="@Model.Id" asp-route-seasonNumber="@i" class="season-btn">
+                Season @i
+            </a>
+        }
+    </div>
+
+    <!-- CURRENT SEASON -->
+    @{
+        var currentSeason = Model.Seasons.Where(s => s.SeasonNumber == ViewBag.SeasonNumber).FirstOrDefault();
+    }
+
+    <div class="episodes">
+        <h2>Season @currentSeason.SeasonNumber</h2>
+
+        <div class="episode-grid">
+
+			@{
+                var episodes = currentSeason.Episodes.ToArray();
+
+            @for (int i = 0; i < episodes.Count(); i++) 
+            {
+                <div class="episode-card">
+                        <img src="@episodes[i].ImageUrl" />
+
+                        <div class="episode-info">
+                            <span>
+							@currentSeason.SeasonNumber x @( (i+1).ToString("00") )
+                            </span>
+                            <p>@episodes[i].EpisodeTitle</p>
+                             <p>
+                                <small>@episodes[i].ReleaseDate.ToString("dd-MM-yyyy")</small>
+                             </p>
+                        </div>
+                    </div>
+            }
+            }
+        </div>
+    </div>
+
+</div>
