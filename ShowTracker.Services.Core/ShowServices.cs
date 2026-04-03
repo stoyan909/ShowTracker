@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using ShowTracker.Data;
 using ShowTracker.Data.Models;
 using ShowTracker.Services.Core.Interfaces;
+using ShowTracker.ViewModel.ShowsViewModel;
 
 namespace ShowTracker.Services.Core
 {
@@ -12,6 +12,36 @@ namespace ShowTracker.Services.Core
         public ShowServices(ShowTrackerDbContext dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        public Show CreateShow(CreateShowViewModel showViewModel)
+        {
+            int season = showViewModel.SeasonNumber;
+            Show show = new Show()
+            {
+                Id = Guid.NewGuid(),
+                Name = showViewModel.Name,
+                Description = showViewModel.Description,
+                Seasons = new List<Season>()
+            };
+
+            for (int i = 1; i <= season; i++)
+            {
+                show.Seasons.Add(new Season()
+                {
+                    Id = Guid.NewGuid(),
+                    SeasonNumber = i,
+                    ShowId = show.Id
+                });
+            }
+
+            return show;
+        }
+
+        public async Task DeleteShow(Show show)
+        {
+            dbContext.Shows.Remove(show);
+            await dbContext.SaveChangesAsync();
         }
 
         public UsersShows FollowShow(string userId, Guid showId)
@@ -37,6 +67,12 @@ namespace ShowTracker.Services.Core
             return show;
         }
 
+        public async Task SaveNewShow(Show show)
+        {
+            dbContext.Shows.Add(show);
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task SaveNewUserShowToDataBase(UsersShows userShow)
         {
             dbContext.UsersShows.Add(userShow);
@@ -46,6 +82,13 @@ namespace ShowTracker.Services.Core
         public async Task<bool> ShowExistInDatabase(Guid id)
         {
             bool showExist = await dbContext.Shows.AnyAsync(s => s.Id == id);
+
+            return showExist;
+        }
+
+        public async Task<bool> ShowExistInDatabase(string showTitle)
+        {
+            bool showExist = await dbContext.Shows.AnyAsync(s => s.Name == showTitle);
 
             return showExist;
         }

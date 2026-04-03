@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{61
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowTracker.Services.Core", "..\ShowTracker.Services.Core\ShowTracker.Services.Core.csproj", "{2F8FBED0-CBA4-47BA-AE9D-A3C311F438AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowTracker.ViewModel", "..\ShowTracker.ViewModel\ShowTracker.ViewModel.csproj", "{340B7912-10D4-40C6-A741-1324F106B8A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{2F8FBED0-CBA4-47BA-AE9D-A3C311F438AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F8FBED0-CBA4-47BA-AE9D-A3C311F438AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F8FBED0-CBA4-47BA-AE9D-A3C311F438AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{340B7912-10D4-40C6-A741-1324F106B8A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{340B7912-10D4-40C6-A741-1324F106B8A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{340B7912-10D4-40C6-A741-1324F106B8A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{340B7912-10D4-40C6-A741-1324F106B8A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,5 +60,6 @@ Global
 		{22A27D69-1597-43BF-9414-EDF3F3EFFB5C} = {E4C031A5-BCC1-46F6-8672-A602AB912365}
 		{8D2F12ED-3196-43A0-8164-D9F51902346E} = {E4C031A5-BCC1-46F6-8672-A602AB912365}
 		{2F8FBED0-CBA4-47BA-AE9D-A3C311F438AD} = {61B916D9-EB58-4C8B-AB35-B63F4519528E}
+		{340B7912-10D4-40C6-A741-1324F106B8A4} = {069E432E-B5B9-415B-AFE6-04053D6A231E}
 	EndGlobalSection
 EndGlobal

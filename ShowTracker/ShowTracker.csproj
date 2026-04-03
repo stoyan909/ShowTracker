@@ -13,6 +13,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +21,7 @@
     <ProjectReference Include="..\ShowTracker.Data.Models\ShowTracker.Data.Models.csproj" />
     <ProjectReference Include="..\ShowTracker.Data\ShowTracker.Data.csproj" />
     <ProjectReference Include="..\ShowTracker.Services.Core\ShowTracker.Services.Core.csproj" />
+    <ProjectReference Include="..\ShowTracker.ViewModel\ShowTracker.ViewModel.csproj" />
   </ItemGroup>
 
 </Project>

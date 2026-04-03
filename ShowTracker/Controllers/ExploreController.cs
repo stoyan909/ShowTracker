@@ -4,11 +4,11 @@ using ShowTracker.Services.Core.Interfaces;
 
 namespace ShowTracker.Controllers
 {
-    public class Explore : BaseController
+    public class ExploreController : BaseController
     {
         private readonly IExploreServices exploreServices;
 
-        public Explore(IExploreServices exploreServices)
+        public ExploreController(IExploreServices exploreServices)
         {
             this.exploreServices = exploreServices;
         }

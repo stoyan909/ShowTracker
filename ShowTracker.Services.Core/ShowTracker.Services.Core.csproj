@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ShowTracker.Data.Models\ShowTracker.Data.Models.csproj" />
     <ProjectReference Include="..\ShowTracker.Data\ShowTracker.Data.csproj" />
+    <ProjectReference Include="..\ShowTracker.ViewModel\ShowTracker.ViewModel.csproj" />
   </ItemGroup>
 
 </Project>

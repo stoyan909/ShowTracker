@@ -1,4 +1,5 @@
 ﻿using ShowTracker.Data.Models;
+using ShowTracker.ViewModel.ShowsViewModel;
 
 namespace ShowTracker.Services.Core.Interfaces
 {
@@ -8,6 +9,8 @@ namespace ShowTracker.Services.Core.Interfaces
 
         Task<bool> ShowExistInDatabase(Guid id);
 
+        Task<bool> ShowExistInDatabase(string showTitle);
+
         Task<bool> UserShowContainsGivenShow(string userId, Guid showId);
 
         UsersShows FollowShow(string userId, Guid showId);
@@ -15,5 +18,11 @@ namespace ShowTracker.Services.Core.Interfaces
         Task UnfollowShow(string userId, Guid showId);
 
         Task SaveNewUserShowToDataBase(UsersShows userShow);
+
+        Task SaveNewShow(Show show);
+
+        Task DeleteShow(Show show);
+
+        Show CreateShow(CreateShowViewModel showViewModel);
     }
 }
