@@ -39,7 +39,7 @@ namespace ShowTracker.Controllers
                 return NotFound();
             }
 
-            var show = await showServices.GetShowWithSeasonsAndEpisodes(showId);
+            Show show = await showServices.GetShowWithSeasonsAndEpisodes(showId);
 
             ViewBag.SeasonNumber = seasonNumber;
 
@@ -89,6 +89,7 @@ namespace ShowTracker.Controllers
         public IActionResult CreateShow()
         {
             CreateShowViewModel model = new CreateShowViewModel();
+
             return View(model);
         }
 
@@ -102,36 +103,102 @@ namespace ShowTracker.Controllers
 
             bool showExist = await showServices.ShowExistInDatabase(model.Name);
 
-            if (showExist) 
+            if (showExist)
             {
                 ModelState.Clear();
                 ModelState.AddModelError("Name", "This show already exists");
                 return View("CreateShow", new CreateShowViewModel());
             }
 
-            var show = showServices.CreateShow(model);
+            Show show = showServices.CreateShow(model);
 
-            if (model.ShowPictureFile != null)
-            {
-                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ShowPics");
-
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                string fileName = show.Name + show.Id + ".jpg";
-                string filePath = Path.Combine(uploadsFolder, fileName);
-
-                using (Image image = await Image.LoadAsync(model.ShowPictureFile.OpenReadStream()))
-                {
-                    await image.SaveAsync(filePath, new JpegEncoder());
-                }
-            }
+            await showServices.GeneratePictureForShow(model.ShowPictureFile, show.Name, show.Id.ToString());
 
             await showServices.SaveNewShow(show);
 
             return RedirectToAction("Index", "Explore");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditShow(string id )
+        {
+
+            if (generalServices.IsStringNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            if (!generalServices.isGuidValid(id))
+            {
+                return BadRequest();
+            }
+
+            Guid showId = generalServices.GetGuidFromString(id);
+
+            bool showExist = await showServices.ShowExistInDatabase(showId);
+
+            if (!showExist)
+            {
+                return NotFound();
+            }
+
+            Show show = await showServices.GetShowWithSeasonsAndEpisodes(showId);
+
+            EditShowViewModel model = new EditShowViewModel()
+            {
+                Id = show.Id,
+                Name = show.Name,
+                Description = show.Description,
+                SeasonNumber = show.Seasons.Count
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditShow(EditShowViewModel model) 
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool showExist = await showServices.ShowExistInDatabase(model.Id);
+
+            if (!showExist)
+            {
+                return NotFound();
+            }
+
+            Show show = await showServices.GetShowWithSeasonsAndEpisodes(model.Id);
+
+            if (model.ShowPictureFile != null) 
+            {
+                showServices.DeleteShowPicture(show);
+
+                await showServices.GeneratePictureForShow(model.ShowPictureFile, model.Name, model.Id.ToString());
+            }
+
+            if (model.SeasonNumber > show.Seasons.Count) 
+            {
+                // If the new season number is greater than the current number of seasons, we need to add new seasons to the show
+            }
+
+            try
+            {
+                show = showServices.EditShow(model);
+
+                await showServices.SaveEditShow(show);
+
+                return RedirectToAction("Index", new { id = show.Id, seasonNumber = 1 });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                ModelState.AddModelError(string.Empty, "An error occurred while updating the show.");
+                return View(model);
+            }
+
         }
     }
 }
