@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using ShowTracker.Data;
 using ShowTracker.Data.Models;
 using ShowTracker.Services.Core.Interfaces;
 using ShowTracker.ViewModel.ShowsViewModel;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Jpeg;
 
 namespace ShowTracker.Services.Core
 {
@@ -44,6 +47,28 @@ namespace ShowTracker.Services.Core
             await dbContext.SaveChangesAsync();
         }
 
+        public void DeleteShowPicture(Show show)
+        {
+            string filePath = $"wwwroot/ShowPics/{show.Name + show.Id}.jpg";
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+        }
+
+        public Show EditShow(EditShowViewModel showViewModel)
+        {
+            Show show = new Show()
+            {
+                Id = showViewModel.Id,
+                Name = showViewModel.Name,
+                Description = showViewModel.Description
+            };
+
+            return show;
+        }
+
         public UsersShows FollowShow(string userId, Guid showId)
         {
             UsersShows userShow = new UsersShows()
@@ -55,6 +80,27 @@ namespace ShowTracker.Services.Core
             return userShow;
         }
 
+        public async Task GeneratePictureForShow(IFormFile? showPictureFile, string name, string id)
+        {
+            if (showPictureFile != null)
+            {
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ShowPics");
+
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                string fileName = name + id + ".jpg";
+                string filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var image = await Image.LoadAsync(showPictureFile.OpenReadStream()))
+                {
+                    await image.SaveAsync(filePath, new JpegEncoder());
+                }
+            }
+        }
+
         public async Task<Show> GetShowWithSeasonsAndEpisodes(Guid id)
         {
              Show show = await dbContext.Shows
@@ -62,9 +108,16 @@ namespace ShowTracker.Services.Core
                 .Include(s => s.Users)
                 .Include(s => s.Seasons)
                 .ThenInclude(s => s.Episodes)
+                .AsNoTracking()
                 .FirstAsync();
 
             return show;
+        }
+
+        public async Task SaveEditShow(Show show)
+        {
+            dbContext.Shows.Update(show);
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task SaveNewShow(Show show)
