@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Metrics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShowTracker.Data.Models;
 using ShowTracker.Services.Core.Interfaces;
 using ShowTracker.ViewModel.ShowsViewModel;
@@ -81,12 +80,7 @@ namespace ShowTracker.Controllers
 
             Show show = await showServices.GetShowWithSeasonsAndEpisodes(showGuidId);
 
-            string filePath = $"wwwroot/ShowPics/{show.Name + show.Id}.jpg";
-
-            if (System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Delete(filePath);
-            }
+            showServices.DeleteShowPicture(show);
 
             try
             {
@@ -99,8 +93,6 @@ namespace ShowTracker.Controllers
                 ModelState.AddModelError(string.Empty, "An error occurred while deleting the show.");
                 return View(model);
             }
-
-
         }
     }
 }
