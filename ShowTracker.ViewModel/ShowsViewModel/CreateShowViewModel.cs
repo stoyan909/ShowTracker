@@ -19,7 +19,7 @@ namespace ShowTracker.ViewModel.ShowsViewModel
         public string Description { get; set; } = null!;
 
         [Required]
-        [Display(Name = "Season")]
+        [Display(Name = "Seasons")]
         public int SeasonNumber { get; set; } = 1;
 
         [Display(Name = "Show picture")]
