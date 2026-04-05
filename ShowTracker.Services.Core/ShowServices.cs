@@ -17,6 +17,18 @@ namespace ShowTracker.Services.Core
             this.dbContext = dbContext;
         }
 
+        public Show AddNewSeasonToShow(Show show)
+        {
+            show.Seasons.Add(
+                new Season()
+                {
+                    ShowId = show.Id,
+                    SeasonNumber = show.Seasons.Count + 1
+                });
+
+            return show;
+        }
+
         public Show CreateShow(CreateShowViewModel showViewModel)
         {
             int season = showViewModel.SeasonNumber;
@@ -112,6 +124,19 @@ namespace ShowTracker.Services.Core
                 .FirstAsync();
 
             return show;
+        }
+
+        public async Task RemoveLastSeasonFromShow(Show show)
+        {
+            Season? lastSeason = show.Seasons
+                .OrderByDescending(s => s.SeasonNumber)
+                .FirstOrDefault();
+
+            if (lastSeason != null)
+            {
+                dbContext.Seasons.Remove(lastSeason);
+                await dbContext.SaveChangesAsync();   
+            }
         }
 
         public async Task SaveEditShow(Show show)

@@ -2,8 +2,6 @@
 using ShowTracker.Data.Models;
 using ShowTracker.Services.Core.Interfaces;
 using ShowTracker.ViewModel.ShowsViewModel;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Jpeg;
 
 namespace ShowTracker.Controllers
 {
@@ -116,7 +114,7 @@ namespace ShowTracker.Controllers
 
             await showServices.SaveNewShow(show);
 
-            return RedirectToAction("Index", "Explore");
+            return RedirectToAction(nameof(ExploreController.Index), "Explore");
         }
 
         [HttpGet]
@@ -181,7 +179,13 @@ namespace ShowTracker.Controllers
 
             if (model.SeasonNumber > show.Seasons.Count) 
             {
-                // If the new season number is greater than the current number of seasons, we need to add new seasons to the show
+                int count = model.SeasonNumber - show.Seasons.Count;
+                return RedirectToAction(nameof(SeasonController.CreateSeason), "Season", new { id = show.Id, count = count});  
+            }
+            else if (model.SeasonNumber < show.Seasons.Count)
+            {
+                int count = show.Seasons.Count - model.SeasonNumber;
+                return RedirectToAction(nameof(SeasonController.DeleteSeason), "Season", new { id = show.Id, count = count});
             }
 
             try
@@ -190,7 +194,7 @@ namespace ShowTracker.Controllers
 
                 await showServices.SaveEditShow(show);
 
-                return RedirectToAction("Index", new { id = show.Id, seasonNumber = 1 });
+                return RedirectToAction(nameof(ShowController.Index), new { id = show.Id, seasonNumber = 1 });
             }
             catch (Exception e)
             {

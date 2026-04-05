@@ -33,5 +33,9 @@ namespace ShowTracker.Services.Core.Interfaces
         Show CreateShow(CreateShowViewModel showViewModel);
 
         Show EditShow(EditShowViewModel showViewModel);
+
+        Show AddNewSeasonToShow(Show show);
+
+        Task RemoveLastSeasonFromShow(Show show);
     }
 }
