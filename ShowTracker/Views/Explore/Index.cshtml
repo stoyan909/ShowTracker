@@ -23,7 +23,7 @@
 
 						foreach (string images in files)
 						{
-							if (images.ToLower().Contains(show.Name.ToLower()))
+							if (images.ToLower().Contains(show.Name.ToLower()) && images.ToLower().Contains(show.Id.ToString()))
 							{
 								imageUrl = images.Replace("wwwroot", "").Replace("\\", "/");
 								break;

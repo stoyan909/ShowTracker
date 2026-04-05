@@ -11,7 +11,15 @@
 
     <!-- HEADER -->
     <div class="show-header">
-
+        @{
+			string imageUrl = null;
+            string? image = Directory.GetFiles("wwwroot/ShowPics/",$"{Model.Name.ToLower()}{Model.Id.ToString()}.jpg").FirstOrDefault();
+            if (image != null) 
+            {
+                imageUrl = image.Replace("wwwroot", "").Replace("\\", "/");
+            }
+        }
+        <img src="@(imageUrl ?? "/images/no-image.png")" class="poster" alt="@Model.Name" />
         <div class="show-info">
             <h1>@Model.Name</h1>
             <p>@Model.Description</p>
@@ -27,6 +35,12 @@
                     Follow
                 </a>
             }
+                <a class="edit-btn" asp-controller="Show" asp-action="EditShow" asp-route-id="@Model.Id">
+                    Edit show
+                </a>
+                <a class="delete-btn" asp-controller="Delete" asp-action="Show" asp-route-id="@Model.Id">
+                    Delete show
+                </a>
         </div>
     </div>
 
