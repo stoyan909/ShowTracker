@@ -7,6 +7,13 @@
 
 <link rel="stylesheet" href="~/css/show.css" />
 
+@if (TempData["ErrorMessage"] != null)
+{
+        <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+        </div>
+}
+
 <div class="container">
 
     <!-- HEADER -->
@@ -46,17 +53,23 @@
 
     <!-- SEASONS -->
     <div class="season-posters">
+            <a asp-controller="Season" asp-action="CreateSeason" asp-route-id="@Model.Id" class="addseason-btn">
+                Add season
+            </a>
         @for (int i = 1; i <= Model.Seasons.Count(); i++) 
         {
             <a asp-controller="Show" asp-action="Index" asp-route-id="@Model.Id" asp-route-seasonNumber="@i" class="season-btn">
                 Season @i
             </a>
         }
+            <a asp-controller="Season" asp-action="DeleteSeason" asp-route-id="@Model.Id" class="removeseason-btn">
+                Remove season
+            </a>
     </div>
 
     <!-- CURRENT SEASON -->
     @{
-        var currentSeason = Model.Seasons.Where(s => s.SeasonNumber == ViewBag.SeasonNumber).FirstOrDefault();
+        Season? currentSeason = Model.Seasons.Where(s => s.SeasonNumber == ViewBag.SeasonNumber).FirstOrDefault();
     }
 
     <div class="episodes">

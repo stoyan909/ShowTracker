@@ -47,6 +47,38 @@
     background: #475569;
 }
 
+.addseason-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 14px;
+    text-decoration: none
+}
+
+    .addseason-btn:hover {
+        background: #475569;
+    }
+
+.removeseason-btn {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 14px;
+    text-decoration: none
+}
+
+    .removeseason-btn:hover {
+        background: #ef4444;
+    }
+
 .season-btn.active {
     background: #3b82f6;
     color: white;
@@ -94,7 +126,6 @@
 
 .delete-btn {
     margin-top: 15px;
-/*    margin-left: 15px;*/
     padding: 8px 16px;
     background: #dc2626;
     border: none;
