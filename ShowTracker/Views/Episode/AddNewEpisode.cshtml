@@ -1,0 +1,43 @@
+﻿@using ShowTracker.ViewModel.EpisodesViewModel
+@model CreateEpisodeViewModel
+
+@{
+    ViewData["Title"] = "Create Episode";
+}
+
+<link rel="stylesheet" href="~/css/createShow.css" />
+
+<div class="form-container">
+    <h2>Create Episode</h2>
+
+    <form asp-action="CreateShow" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label asp-for="EpisodeTitle"></label>
+            <input asp-for="EpisodeTitle" class="form-control" placeholder="Enter episode title..." />
+            <span asp-validation-for="EpisodeTitle" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ReleaseDate"></label>
+            <input asp-for="ReleaseDate" class="form-control" type="date" />
+            <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ImageUrl"></label>
+            <input asp-for="ImageUrl" type="url" class="form-control" placeholder="Enter image URL" />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="ShowPictureFile">Show Image</label>
+            <input type="file" name="ShowPictureFile" class="form-control" accept="image/*" />
+        </div>
+
+        <div class="btn-group">
+            <button type="submit" class="btn-submit">Create</button>
+            <button type="button" class="btn-cancel" onclick="history.back()">Cancel</button>
+        </div>
+    </form>
+</div>
