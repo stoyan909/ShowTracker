@@ -20,6 +20,7 @@ namespace ShowTracker.ViewModel.EpisodesViewModel
 
         public Guid SeasonId { get; set; }
 
+        [Display(Name = "Episode image URL")]
         public string? ImageUrl { get; set; }
     }
 }
