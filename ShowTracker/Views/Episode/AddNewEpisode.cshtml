@@ -10,7 +10,7 @@
 <div class="form-container">
     <h2>Create Episode</h2>
 
-    <form asp-action="CreateShow" method="post" enctype="multipart/form-data">
+    <form asp-action="AddNewEpisode" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
             <label asp-for="EpisodeTitle"></label>
@@ -29,6 +29,8 @@
             <input asp-for="ImageUrl" type="url" class="form-control" placeholder="Enter image URL" />
             <span asp-validation-for="ImageUrl" class="text-danger"></span>
         </div>
+
+        <input asp-for="SeasonId" type="hidden" />
 
         <div class="btn-group">
             <button type="submit" class="btn-submit">Create</button>

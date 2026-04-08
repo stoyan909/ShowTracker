@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using static ShowTracker.Common.ValidationConstants.EpisodesValidationConstants;
 
 namespace ShowTracker.ViewModel.EpisodesViewModel
 {
     public class CreateEpisodeViewModel
     {
-        public int Id { get; set; }
-
         [Required]
         [MinLength(EpisodeTitleMinLength)]
         [MaxLength(EpisodeTitleMaxLength)]

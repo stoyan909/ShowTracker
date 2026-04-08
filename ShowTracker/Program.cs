@@ -23,6 +23,7 @@ internal class Program
         builder.Services.AddScoped<IShowServices, ShowServices>();     
         builder.Services.AddScoped<IGeneralServices, GeneralServices>();   
         builder.Services.AddScoped<ISeasonServices, SeasonServices>();
+        builder.Services.AddScoped<IEpisodeServices, EpisodeServices>();
 
         builder.Services.AddControllersWithViews();
 
