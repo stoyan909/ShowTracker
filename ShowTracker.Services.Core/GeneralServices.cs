@@ -26,5 +26,15 @@ namespace ShowTracker.Services.Core
 
             return guidIsValid;
         }
+
+        public int GetIntFromString(string str)
+        {
+            return int.Parse(str);
+        }
+
+        public bool isIntValid(string str)
+        {
+            return int.TryParse(str, out int result);
+        }
     }
 }

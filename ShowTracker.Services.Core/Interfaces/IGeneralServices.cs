@@ -6,6 +6,10 @@
 
         bool isGuidValid(string str);
 
+        bool isIntValid(string str);
+
         Guid GetGuidFromString(string str);
+
+        int GetIntFromString(string str);
     }
 }
