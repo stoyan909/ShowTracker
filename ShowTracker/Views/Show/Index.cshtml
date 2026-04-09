@@ -99,6 +99,9 @@
                                 <small>@episodes[i].ReleaseDate.ToString("dd-MM-yyyy")</small>
                              </p>
                         </div>
+                        <a asp-controller="Episode" asp-action="EditEpisode" asp-route-id="@episodes[i].Id" class="edit-episode-btn">
+                            Edit episode
+                        </a>
                         <a asp-controller="Delete" asp-action="Episode" asp-route-id="@episodes[i].Id" class="remove-episode-btn">
                             Remove episode
                         </a>

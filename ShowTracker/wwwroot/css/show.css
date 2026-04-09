@@ -240,3 +240,20 @@
     .remove-episode-btn:hover {
         background: #ef4444;
     }
+
+.edit-episode-btn {
+    display: block;
+    text-align: center;
+    margin: 10px;
+    padding: 8px;
+    border-radius: 6px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+    .edit-episode-btn:hover {
+        background: #3b82f6;
+    }
