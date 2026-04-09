@@ -11,7 +11,7 @@ namespace ShowTracker.Services.Core.Interfaces
     {
         Task<bool> EpisodeExistInDatabase(int id);
 
-        Task<Episode> GetEpisode(int id);
+        Task<Episode> GetEpisodeWithSeasons(int id);
 
         Task DeleteEpisode(Episode episode);
     }

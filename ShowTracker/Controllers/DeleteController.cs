@@ -124,7 +124,7 @@ namespace ShowTracker.Controllers
                 return NotFound();
             }
 
-            Episode episode = await episodeServices.GetEpisode(episodeId);
+            Episode episode = await episodeServices.GetEpisodeWithSeasons(episodeId);
 
             DeleteEpisodeViewModel model = new DeleteEpisodeViewModel()
             {
@@ -161,12 +161,12 @@ namespace ShowTracker.Controllers
                 return NotFound();
             }
 
-            Episode episode = await episodeServices.GetEpisode(episodeIntId);
+            Episode episode = await episodeServices.GetEpisodeWithSeasons(episodeIntId);
 
             try
             {
                 await episodeServices.DeleteEpisode(episode);
-                return RedirectToAction(nameof(ExploreController.Index), "Explore");
+                return RedirectToAction(nameof(ShowController.Index), nameof(Show), new {id = episode.Season.ShowId, seasonNumber = episode.Season.SeasonNumber});
             }
             catch (Exception e)
             {

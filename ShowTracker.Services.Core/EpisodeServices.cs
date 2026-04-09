@@ -24,9 +24,9 @@ namespace ShowTracker.Services.Core
             return await dbContext.Episodes.AnyAsync(e => e.Id == id);
         }
 
-        public async Task<Episode> GetEpisode(int id)
+        public async Task<Episode> GetEpisodeWithSeasons(int id)
         {
-            return await dbContext.Episodes.FirstAsync(e => e.Id == id);
+            return await dbContext.Episodes.Include(e=>e.Season).FirstAsync(e => e.Id == id);
         }
     }
 }
