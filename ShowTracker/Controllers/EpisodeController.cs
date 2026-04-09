@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShowTracker.Data.Models;
-using ShowTracker.Services.Core;
 using ShowTracker.Services.Core.Interfaces;
 using ShowTracker.ViewModel.EpisodesViewModel;
 
@@ -65,9 +64,7 @@ namespace ShowTracker.Controllers
 
             try
             {
-                seasonServices.AddNewEpisodeToSeason(season, model);
-
-                await seasonServices.SaveSeasonChanges(season);
+                await seasonServices.AddNewEpisodeToSeasonAndSaveToDatabase(season, model);
 
                 return RedirectToAction(nameof(ShowController.Index), nameof(Show), new { id = season.ShowId, seasonNumber = season.SeasonNumber});
             }

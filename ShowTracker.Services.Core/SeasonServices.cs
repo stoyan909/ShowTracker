@@ -14,11 +14,10 @@ namespace ShowTracker.Services.Core
             this.dbContext = dbContext;
         }
 
-        public Season AddNewEpisodeToSeason(Season season, CreateEpisodeViewModel model)
+        public async Task AddNewEpisodeToSeasonAndSaveToDatabase(Season season, CreateEpisodeViewModel model)
         {
             Episode episode = new Episode
             {
-                Id = season.Episodes.Count() +1,
                 EpisodeTitle = model.EpisodeTitle,
                 ReleaseDate = model.ReleaseDate,
                 ImageUrl = model.ImageUrl,
@@ -26,7 +25,8 @@ namespace ShowTracker.Services.Core
             };
 
             season.Episodes.Add(episode);
-            return season;
+            await dbContext.Episodes.AddAsync(episode);
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<Season> GetSeason(Guid id)

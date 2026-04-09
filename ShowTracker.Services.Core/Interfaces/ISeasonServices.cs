@@ -11,6 +11,6 @@ namespace ShowTracker.Services.Core.Interfaces
 
         Task SaveSeasonChanges(Season season);
 
-        Season AddNewEpisodeToSeason(Season season,CreateEpisodeViewModel model);
+        Task AddNewEpisodeToSeasonAndSaveToDatabase(Season season,CreateEpisodeViewModel model);
     }
 }
