@@ -2,6 +2,7 @@
 using ShowTracker.Data;
 using ShowTracker.Data.Models;
 using ShowTracker.Services.Core.Interfaces;
+using ShowTracker.ViewModel.EpisodesViewModel;
 
 namespace ShowTracker.Services.Core
 {
@@ -19,6 +20,20 @@ namespace ShowTracker.Services.Core
             await dbContext.SaveChangesAsync();
         }
 
+        public Episode EditEpisode(EditEpisodeViewModel model)
+        {
+            Episode episode = new Episode()
+            {
+                Id = model.Id,
+                SeasonId = model.SeasonId,
+                EpisodeTitle = model.EpisodeTitle,
+                ReleaseDate = model.ReleaseDate,
+                ImageUrl = model.ImageUrl
+            };
+
+            return episode;
+        }
+
         public async Task<bool> EpisodeExistInDatabase(int id)
         {
             return await dbContext.Episodes.AnyAsync(e => e.Id == id);
@@ -26,7 +41,17 @@ namespace ShowTracker.Services.Core
 
         public async Task<Episode> GetEpisodeWithSeasons(int id)
         {
-            return await dbContext.Episodes.Include(e=>e.Season).FirstAsync(e => e.Id == id);
+            return await dbContext.Episodes
+                .Include(e => e.Season)
+                .AsNoTracking()
+                .FirstAsync(e => e.Id == id);
+                
+        }
+
+        public async Task SaveEpisodeChanges(Episode episode)
+        {
+            dbContext.Episodes.Update(episode);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

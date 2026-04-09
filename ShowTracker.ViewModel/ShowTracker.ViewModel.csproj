@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ShowTracker.Common\ShowTracker.Common.csproj" />
+    <ProjectReference Include="..\ShowTracker.Data.Models\ShowTracker.Data.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
