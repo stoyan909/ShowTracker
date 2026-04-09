@@ -9,9 +9,9 @@
 
 @if (TempData["ErrorMessage"] != null)
 {
-        <div class="alert alert-danger">
+    <div class="alert alert-danger">
         @TempData["ErrorMessage"]
-        </div>
+    </div>
 }
 
 <div class="container">
@@ -19,7 +19,7 @@
     <!-- HEADER -->
     <div class="show-header">
         @{
-			string imageUrl = null;
+            string imageUrl = null;
             string? image = Directory.GetFiles("wwwroot/ShowPics/",$"{Model.Name.ToLower()}{Model.Id.ToString()}.jpg").FirstOrDefault();
             if (image != null) 
             {
@@ -42,44 +42,49 @@
                     Follow
                 </a>
             }
-                <a class="edit-btn" asp-controller="Show" asp-action="EditShow" asp-route-id="@Model.Id">
-                    Edit show
-                </a>
-                <a class="delete-btn" asp-controller="Delete" asp-action="Show" asp-route-id="@Model.Id">
-                    Delete show
-                </a>
+            <a class="edit-btn" asp-controller="Show" asp-action="EditShow" asp-route-id="@Model.Id">
+                Edit show
+            </a>
+            <a class="delete-btn" asp-controller="Delete" asp-action="Show" asp-route-id="@Model.Id">
+                Delete show
+            </a>
         </div>
     </div>
 
     <!-- SEASONS -->
     <div class="season-posters">
-            <a asp-controller="Season" asp-action="CreateSeason" asp-route-id="@Model.Id" class="addseason-btn">
-                Add season
-            </a>
+        <a asp-controller="Season" asp-action="CreateSeason" asp-route-id="@Model.Id" class="addseason-btn">
+            Add season
+        </a>
         @for (int i = 1; i <= Model.Seasons.Count(); i++) 
         {
             <a asp-controller="Show" asp-action="Index" asp-route-id="@Model.Id" asp-route-seasonNumber="@i" class="season-btn">
                 Season @i
             </a>
         }
-            <a asp-controller="Season" asp-action="DeleteSeason" asp-route-id="@Model.Id" class="removeseason-btn">
-                Remove season
-            </a>
+        <a asp-controller="Season" asp-action="DeleteSeason" asp-route-id="@Model.Id" class="removeseason-btn">
+            Remove season
+        </a>
     </div>
 
     <!-- CURRENT SEASON -->
     @{
-        Season? currentSeason = Model.Seasons.Where(s => s.SeasonNumber == ViewBag.SeasonNumber).FirstOrDefault();
+        int a = ViewBag.SeasonNumber;
+        Season? currentSeason = Model.Seasons.FirstOrDefault(s => s.SeasonNumber == a);
     }
 
     <div class="episodes">
         <h2>Season @currentSeason.SeasonNumber</h2>
-
-        <div class="episode-grid">
-
-			@{
-                var episodes = currentSeason.Episodes.ToArray();
-
+            
+    <div class="episode-actions">
+        <a asp-controller="Episode" asp-action="AddNewEpisode" asp-route-id="@currentSeason.Id" class="addseason-btn">
+            + Add New Episode
+        </a>
+    </div>
+    <div class="episode-grid">   
+        @{
+            Episode[] episodes = currentSeason.Episodes.ToArray();
+            
             @for (int i = 0; i < episodes.Count(); i++) 
             {
                 <div class="episode-card">
@@ -94,6 +99,9 @@
                                 <small>@episodes[i].ReleaseDate.ToString("dd-MM-yyyy")</small>
                              </p>
                         </div>
+                        <a asp-controller="Delete" asp-action="Episode" asp-route-id="@episodes[i].Id" class="remove-episode-btn">
+                            Remove episode
+                        </a>
                     </div>
             }
             }
