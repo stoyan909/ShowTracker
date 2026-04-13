@@ -37,7 +37,7 @@ namespace ShowTracker.Controllers
                 return NotFound();
             }
 
-            Show show = await showServices.GetShowWithSeasonsAndEpisodes(showId);
+            Show show = await showServices.GetShowWithSeasonsAndEpisodesAndUsers(showId);
 
             ViewBag.SeasonNumber = seasonNumber;
 
@@ -140,7 +140,7 @@ namespace ShowTracker.Controllers
                 return NotFound();
             }
 
-            Show show = await showServices.GetShowWithSeasonsAndEpisodes(showId);
+            Show show = await showServices.GetShowWithSeasonsAndEpisodesAndUsers(showId);
 
             EditShowViewModel model = new EditShowViewModel()
             {
@@ -168,7 +168,7 @@ namespace ShowTracker.Controllers
                 return NotFound();
             }
 
-            Show show = await showServices.GetShowWithSeasonsAndEpisodes(model.Id);
+            Show show = await showServices.GetShowWithSeasonsAndEpisodesAndUsers(model.Id);
 
             if (model.ShowPictureFile != null) 
             {

@@ -44,7 +44,7 @@ namespace ShowTracker.Controllers
                 return NotFound();
             }
 
-            Show show = await showServices.GetShowWithSeasonsAndEpisodes(showGuidId);
+            Show show = await showServices.GetShowWithSeasonsAndEpisodesAndUsers(showGuidId);
 
             DeleteShowViewModel model = new DeleteShowViewModel()
             {
@@ -81,7 +81,7 @@ namespace ShowTracker.Controllers
                 return NotFound();
             }
 
-            Show show = await showServices.GetShowWithSeasonsAndEpisodes(showGuidId);
+            Show show = await showServices.GetShowWithSeasonsAndEpisodesAndUsers(showGuidId);
 
             showServices.DeleteShowPicture(show);
 

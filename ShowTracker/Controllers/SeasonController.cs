@@ -36,7 +36,7 @@ namespace ShowTracker.Controllers
                 return NotFound();
             }
 
-            Show show = await showServices.GetShowWithSeasonsAndEpisodes(showId);
+            Show show = await showServices.GetShowWithSeasonsAndEpisodesAndUsers(showId);
 
             try
             {
@@ -87,7 +87,7 @@ namespace ShowTracker.Controllers
                 return NotFound();
             }
 
-            Show show = await showServices.GetShowWithSeasonsAndEpisodes(showId);
+            Show show = await showServices.GetShowWithSeasonsAndEpisodesAndUsers(showId);
 
             if (show.Seasons.Count() < 1)
             {
