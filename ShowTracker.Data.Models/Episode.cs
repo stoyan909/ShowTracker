@@ -26,6 +26,8 @@ namespace ShowTracker.Data.Models
 
         public virtual Season Season { get; set; } = null!;
 
+        public virtual ICollection<UserEpisodes> Users { get; set; } = null!;
+
         public string? ImageUrl { get; set; }
 
     }

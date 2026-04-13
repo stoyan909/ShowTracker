@@ -33,6 +33,21 @@ namespace ShowTracker.Data
                 .HasForeignKey(us => us.ShowId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<UserEpisodes>()
+                .HasKey(ue => new { ue.UserId, ue.EpisodeId });
+
+            modelBuilder.Entity<UserEpisodes>()
+                .HasOne(ue => ue.User)
+                .WithMany()
+                .HasForeignKey(ue => ue.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserEpisodes>()
+                .HasOne(ue => ue.Episode)
+                .WithMany(e => e.Users)
+                .HasForeignKey(ue => ue.EpisodeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Show>()
                 .Property(s => s.IsFavorite)
                 .HasDefaultValue(false);
