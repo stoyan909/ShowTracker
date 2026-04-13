@@ -6,7 +6,7 @@ namespace ShowTracker.Services.Core.Interfaces
 {
     public interface IShowServices
     {
-        Task<Show> GetShowWithSeasonsAndEpisodes(Guid id);
+        Task<Show> GetShowWithSeasonsAndEpisodesAndUsers(Guid id);
 
         Task<bool> ShowExistInDatabase(Guid id);
 

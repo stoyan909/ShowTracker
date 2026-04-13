@@ -113,13 +113,14 @@ namespace ShowTracker.Services.Core
             }
         }
 
-        public async Task<Show> GetShowWithSeasonsAndEpisodes(Guid id)
+        public async Task<Show> GetShowWithSeasonsAndEpisodesAndUsers(Guid id)
         {
              Show show = await dbContext.Shows
                 .Where(s => s.Id == id)
                 .Include(s => s.Users)
                 .Include(s => s.Seasons)
                 .ThenInclude(s => s.Episodes)
+                .ThenInclude(e => e.Users)
                 .AsNoTracking()
                 .FirstAsync();
 
