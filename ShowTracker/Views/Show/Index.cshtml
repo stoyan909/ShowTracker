@@ -1,8 +1,13 @@
 ﻿@using ShowTracker.Data.Models
+@using System.Security.Claims
 @model Show
 
 @{
     ViewBag.Title = "Show";
+}
+
+@{
+    string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 }
 
 <link rel="stylesheet" href="~/css/show.css" />
@@ -87,8 +92,10 @@
             
             @for (int i = 0; i < episodes.Count(); i++) 
             {
+			var currentEpisode = episodes[i];
+
                 <div class="episode-card">
-                        <img src="@episodes[i].ImageUrl" />
+                        <img src="@currentEpisode.ImageUrl" />
 
                         <div class="episode-info">
                             <span>
@@ -96,13 +103,35 @@
                             </span>
                             <p>@episodes[i].EpisodeTitle</p>
                              <p>
-                                <small>@episodes[i].ReleaseDate.ToString("dd-MM-yyyy")</small>
+                                <small>@currentEpisode.ReleaseDate.ToString("dd-MM-yyyy")</small>
                              </p>
                         </div>
-                        <a asp-controller="Episode" asp-action="EditEpisode" asp-route-id="@episodes[i].Id" class="edit-episode-btn">
+                        @{
+                            if(!currentEpisode.Users.Any(u => u.UserId == userId))
+							{
+                                <form asp-action="EpisodeWatched" asp-controller="Episode" class="watched-btn">
+                                    <input type="hidden" name="id" value="@currentEpisode.Id" />
+                                    <input type="hidden" name="showId" value="@Model.Id" />
+                                    <input type="hidden" name="seasonNumber" value="@currentSeason.SeasonNumber" />
+
+                                    <button type="submit">Watched</button>
+                                </form>
+							}
+							else
+							{
+                                <form asp-action="EpisodeWatched" asp-controller="Episode" class="watched-btn">
+                                    <input type="hidden" name="id" value="@currentEpisode.Id" />
+                                    <input type="hidden" name="showId" value="@Model.Id" />
+                                    <input type="hidden" name="seasonNumber" value="@currentSeason.SeasonNumber" />
+
+                                    <button type="submit">Unwatched</button>
+                                </form>
+							}
+                        }
+                        <a asp-controller="Episode" asp-action="EditEpisode" asp-route-id="@currentEpisode.Id" class="edit-episode-btn">
                             Edit episode
                         </a>
-                        <a asp-controller="Delete" asp-action="Episode" asp-route-id="@episodes[i].Id" class="remove-episode-btn">
+                        <a asp-controller="Delete" asp-action="Episode" asp-route-id="@currentEpisode.Id" class="remove-episode-btn">
                             Remove episode
                         </a>
                     </div>

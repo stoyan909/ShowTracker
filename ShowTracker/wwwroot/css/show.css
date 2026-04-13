@@ -257,3 +257,27 @@
     .edit-episode-btn:hover {
         background: #3b82f6;
     }
+
+.watched-btn {
+    display: block;
+    margin: 10px;
+}
+
+    .watched-btn button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 8px;
+        border-radius: 6px;
+        background: #eab308; /* yellow */
+        color: white;
+        text-decoration: none;
+        font-size: 13px;
+        transition: 0.2s;
+        border: none;
+        cursor: pointer;
+    }
+
+        .watched-btn button:hover {
+            background: #facc15; /* lighter yellow */
+        }
