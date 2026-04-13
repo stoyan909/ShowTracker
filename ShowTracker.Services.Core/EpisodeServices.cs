@@ -34,6 +34,11 @@ namespace ShowTracker.Services.Core
             return episode;
         }
 
+        public Task<bool> EpisodeAlreadyWatchedByUser(int id, string userId)
+        {
+            return dbContext.UsersEpisodes.AnyAsync(ue => ue.EpisodeId == id && ue.UserId == userId);
+        }
+
         public async Task<bool> EpisodeExistInDatabase(int id)
         {
             return await dbContext.Episodes.AnyAsync(e => e.Id == id);
@@ -48,9 +53,29 @@ namespace ShowTracker.Services.Core
                 
         }
 
+        public async Task MarkEpisodeAsWatched(int id, string userId)
+        {
+            UserEpisodes userEpisode = new UserEpisodes()
+            {
+                UserId = userId,
+                EpisodeId = id
+            };
+
+            dbContext.UsersEpisodes.Add(userEpisode);
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task SaveEpisodeChanges(Episode episode)
         {
             dbContext.Episodes.Update(episode);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task UnmarkEpisodeAsWatched(int id, string userId)
+        {
+            UserEpisodes userEpisode = dbContext.UsersEpisodes.FirstOrDefault(ue => ue.EpisodeId == id && ue.UserId == userId)!;
+
+            dbContext.UsersEpisodes.Remove(userEpisode);
             await dbContext.SaveChangesAsync();
         }
     }
