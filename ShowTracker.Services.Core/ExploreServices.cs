@@ -18,5 +18,16 @@ namespace ShowTracker.Services.Core
             List<Show> result = await dbContext.Shows.OrderBy(s => s.Name).Include(s=>s.Users).ToListAsync();
             return result;
         }
+
+        public async Task<List<Show>> GetShowAsync(string showTitle)
+        {
+            List<Show> result = await dbContext.Shows
+                .Where(s => s.Name.ToLower().Contains(showTitle.ToLower()))
+                .OrderBy(s => s.Name)
+                .Include(s => s.Users)
+                .ToListAsync();
+
+            return result;
+        }
     }
 }

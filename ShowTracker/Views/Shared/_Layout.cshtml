@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ShowTracker.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/layout.css" />
 </head>
 <body>
     <header>
@@ -25,6 +26,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Explore" asp-action="Index">Explore</a>
                         </li>
+                        <form class="nav-search" method="GET" asp-controller="Explore" asp-action="SearchShow">
+                            <input type="text" name="input" class="nav-search-input" placeholder="Search shows..." >
+                            <button type="submit" class="nav-search-btn">🔍</button>
+                        </form>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
