@@ -189,38 +189,28 @@ namespace ShowTracker.Controllers
 
             bool episodeAlreadyWatched = await episodeServices.EpisodeAlreadyWatchedByUser(episodeId, userId);
 
-            if (!episodeAlreadyWatched)
+            try
             {
-
-                try
+                if (!episodeAlreadyWatched)
                 {
                     await episodeServices.MarkEpisodeAsWatched(episodeId, userId);
-                    return RedirectToAction(nameof(ShowController.Index), nameof(Show), new { id = showId, seasonNumber = seasonNumber });
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    ModelState.AddModelError(string.Empty, "An error occurred while updating the show.");
-                    return RedirectToAction(nameof(ShowController.Index), nameof(Show), new { id = showId, seasonNumber = seasonNumber });
-
-                }
-            }
-
-            else 
-            {
-                try
+                else
                 {
                     await episodeServices.UnmarkEpisodeAsWatched(episodeId, userId);
-                    return RedirectToAction(nameof(ShowController.Index), nameof(Show), new { id = showId, seasonNumber = seasonNumber });
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    ModelState.AddModelError(string.Empty, "An error occurred while updating the show.");
-                    return RedirectToAction(nameof(ShowController.Index), nameof(Show), new { id = showId, seasonNumber = seasonNumber });
 
-                }
+                return RedirectToAction(nameof(ShowController.Index), nameof(Show), new { id = showId, seasonNumber = seasonNumber });
+
             }
-        } 
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                ModelState.AddModelError(string.Empty, "An error occurred while updating the show.");
+                return RedirectToAction(nameof(ShowController.Index), nameof(Show), new { id = showId, seasonNumber = seasonNumber });
+
+            }
+
+        }
     }
 }
