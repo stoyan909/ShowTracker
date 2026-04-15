@@ -1,7 +1,7 @@
-using Mapping;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShowTracker.Data;
+using ShowTracker.Mapping;
 using ShowTracker.Services.Core;
 using ShowTracker.Services.Core.Interfaces;
 

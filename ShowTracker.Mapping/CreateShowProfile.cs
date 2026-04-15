@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using ShowTracker.Data.Models;
+using ShowTracker.ViewModel.ShowsViewModel;
 
-namespace Mapping
+namespace ShowTracker.Mapping
 {
-    public class CreateShowProfile
+    public class CreateShowProfile:Profile
     {
+        public CreateShowProfile()
+        {
+            CreateMap<CreateShowViewModel, Show>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
+        }
     }
 }
