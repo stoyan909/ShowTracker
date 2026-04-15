@@ -29,18 +29,9 @@ namespace ShowTracker.Services.Core
             return show;
         }
 
-        public Show CreateShow(CreateShowViewModel showViewModel)
+        public Show AddMultipleSeasonToShow(Show show, int seasons)
         {
-            int season = showViewModel.SeasonNumber;
-            Show show = new Show()
-            {
-                Id = Guid.NewGuid(),
-                Name = showViewModel.Name,
-                Description = showViewModel.Description,
-                Seasons = new List<Season>()
-            };
-
-            for (int i = 1; i <= season; i++)
+            for (int i = 1; i <= seasons; i++)
             {
                 show.Seasons.Add(new Season()
                 {

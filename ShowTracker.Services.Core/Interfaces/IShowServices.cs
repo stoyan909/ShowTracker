@@ -30,7 +30,7 @@ namespace ShowTracker.Services.Core.Interfaces
 
         Task DeleteShow(Show show);
 
-        Show CreateShow(CreateShowViewModel showViewModel);
+        Show AddMultipleSeasonToShow(Show show, int seasons);
 
         Show EditShow(EditShowViewModel showViewModel);
 

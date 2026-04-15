@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ShowTracker.Data.Models;
 using ShowTracker.Services.Core.Interfaces;
 using ShowTracker.ViewModel.ShowsViewModel;
@@ -9,10 +10,12 @@ namespace ShowTracker.Controllers
     {
         private readonly IShowServices showServices;
         private readonly IGeneralServices generalServices;
-        public ShowController(IShowServices showServices, IGeneralServices generalServices)
+        private readonly IMapper mapper;
+        public ShowController(IShowServices showServices, IGeneralServices generalServices, IMapper mapper)
         {
             this.showServices = showServices;
             this.generalServices = generalServices;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -108,7 +111,9 @@ namespace ShowTracker.Controllers
                 return View("CreateShow", new CreateShowViewModel());
             }
 
-            Show show = showServices.CreateShow(model);
+            Show show = mapper.Map<Show>(model);
+
+            show = showServices.AddMultipleSeasonToShow(show, model.SeasonNumber);
 
             await showServices.GeneratePictureForShow(model.ShowPictureFile, show.Name, show.Id.ToString());
 

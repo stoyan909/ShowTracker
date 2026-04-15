@@ -8,7 +8,7 @@ namespace ShowTracker.Services.Core
     {
         public bool IsStringNullOrEmpty(string str)
         {
-            bool isStringNull = str.IsNullOrEmpty();
+            bool isStringNull = string.IsNullOrEmpty(str);
 
             return isStringNull;
         }
