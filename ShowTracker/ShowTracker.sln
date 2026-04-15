@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowTracker.Services.Core",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowTracker.ViewModel", "..\ShowTracker.ViewModel\ShowTracker.ViewModel.csproj", "{340B7912-10D4-40C6-A741-1324F106B8A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapping", "..\Mapping\Mapping.csproj", "{0237F547-E230-4275-8D96-B4E08C18DFE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowTracker.Mapping", "..\Mapping\ShowTracker.Mapping.csproj", "{0237F547-E230-4275-8D96-B4E08C18DFE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

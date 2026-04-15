@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mapping\Mapping.csproj" />
+    <ProjectReference Include="..\Mapping\ShowTracker.Mapping.csproj" />
     <ProjectReference Include="..\ShowTracker.Common\ShowTracker.Common.csproj" />
     <ProjectReference Include="..\ShowTracker.Data.Models\ShowTracker.Data.Models.csproj" />
     <ProjectReference Include="..\ShowTracker.Data\ShowTracker.Data.csproj" />
