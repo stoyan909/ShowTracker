@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="15.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.11" />
@@ -16,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mapping\Mapping.csproj" />
     <ProjectReference Include="..\ShowTracker.Common\ShowTracker.Common.csproj" />
     <ProjectReference Include="..\ShowTracker.Data.Models\ShowTracker.Data.Models.csproj" />
     <ProjectReference Include="..\ShowTracker.Data\ShowTracker.Data.csproj" />

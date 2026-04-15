@@ -1,3 +1,4 @@
+using Mapping;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShowTracker.Data;
@@ -24,6 +25,11 @@ internal class Program
         builder.Services.AddScoped<IGeneralServices, GeneralServices>();   
         builder.Services.AddScoped<ISeasonServices, SeasonServices>();
         builder.Services.AddScoped<IEpisodeServices, EpisodeServices>();
+
+        builder.Services.AddAutoMapper(cfg =>
+        {
+            cfg.AddMaps(typeof(CreateShowProfile).Assembly);
+        });
 
         builder.Services.AddControllersWithViews();
 
