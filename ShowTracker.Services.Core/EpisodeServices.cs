@@ -44,38 +44,42 @@ namespace ShowTracker.Services.Core
             return await dbContext.Episodes.AnyAsync(e => e.Id == id);
         }
 
-        public async Task<Episode> GetEpisodeWithSeasons(int id)
+        public async Task<Episode?> GetEpisodeWithSeasons(int id)
         {
             return await dbContext.Episodes
                 .Include(e => e.Season)
                 .AsNoTracking()
-                .FirstAsync(e => e.Id == id);
+                .FirstOrDefaultAsync(e => e.Id == id);
                 
         }
 
-        public async Task MarkEpisodeAsWatched(int id, string userId)
+        public async Task WatchedEpisode(int id, string userId, bool hasWatched)
         {
-            UserEpisodes userEpisode = new UserEpisodes()
+            if (!hasWatched)
             {
-                UserId = userId,
-                EpisodeId = id
-            };
+                UserEpisodes userEpisode = new UserEpisodes()
+                {
+                    UserId = userId,
+                    EpisodeId = id
+                };
 
-            dbContext.UsersEpisodes.Add(userEpisode);
-            await dbContext.SaveChangesAsync();
+                dbContext.UsersEpisodes.Add(userEpisode);
+                await dbContext.SaveChangesAsync();
+            }
+            else 
+            {
+                UserEpisodes userEpisode = dbContext.UsersEpisodes
+                    .FirstOrDefault(ue => ue.EpisodeId == id && ue.UserId == userId)!;
+
+                dbContext.UsersEpisodes.Remove(userEpisode);
+                await dbContext.SaveChangesAsync();
+            }
+
         }
 
         public async Task SaveEpisodeChanges(Episode episode)
         {
             dbContext.Episodes.Update(episode);
-            await dbContext.SaveChangesAsync();
-        }
-
-        public async Task UnmarkEpisodeAsWatched(int id, string userId)
-        {
-            UserEpisodes userEpisode = dbContext.UsersEpisodes.FirstOrDefault(ue => ue.EpisodeId == id && ue.UserId == userId)!;
-
-            dbContext.UsersEpisodes.Remove(userEpisode);
             await dbContext.SaveChangesAsync();
         }
     }

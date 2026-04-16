@@ -9,42 +9,22 @@ namespace ShowTracker.Controllers
     public class DeleteController : BaseController
     {
         private readonly IShowServices showServices;
-        private readonly IGeneralServices generalServices;
         private readonly IEpisodeServices episodeServices;
-        public DeleteController(IShowServices showServices, IGeneralServices generalServices, IEpisodeServices episodeServices)
+        public DeleteController(IShowServices showServices, IEpisodeServices episodeServices)
         {
             this.showServices = showServices;
-            this.generalServices = generalServices;
             this.episodeServices = episodeServices;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Show(string id)
+        public async Task<IActionResult> Show(Guid id)
         {
-            bool isStringNullOrEmpty = generalServices.IsStringNullOrEmpty(id);
+            Show? show = await showServices.GetShowWithDetails(id);
 
-            if (isStringNullOrEmpty)
+            if (show is null) 
             {
                 return NotFound();
             }
-
-            bool isGuidValid = generalServices.isGuidValid(id);
-
-            if (!isGuidValid)
-            {
-                return BadRequest();
-            }
-
-            Guid showGuidId = generalServices.GetGuidFromString(id);
-
-            bool showExist = await showServices.ShowExistInDatabase(showGuidId);
-
-            if (!showExist)
-            {
-                return NotFound();
-            }
-
-            Show show = await showServices.GetShowWithSeasonsAndEpisodesAndUsers(showGuidId);
 
             DeleteShowViewModel model = new DeleteShowViewModel()
             {
@@ -56,32 +36,14 @@ namespace ShowTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Show(string id, DeleteShowViewModel model)
+        public async Task<IActionResult> Show(Guid id, DeleteShowViewModel model)
         {
-            bool isStringNullOrEmpty = generalServices.IsStringNullOrEmpty(id);
+            Show? show = await showServices.GetShowWithDetails(id);
 
-            if (isStringNullOrEmpty)
+            if (show is null) 
             {
                 return NotFound();
             }
-
-            bool isGuidValid = generalServices.isGuidValid(id);
-
-            if (!isGuidValid)
-            {
-                return BadRequest();
-            }
-
-            Guid showGuidId = generalServices.GetGuidFromString(id);
-
-            bool showExist = await showServices.ShowExistInDatabase(showGuidId);
-
-            if (!showExist)
-            {
-                return NotFound();
-            }
-
-            Show show = await showServices.GetShowWithSeasonsAndEpisodesAndUsers(showGuidId);
 
             showServices.DeleteShowPicture(show);
 
@@ -99,32 +61,14 @@ namespace ShowTracker.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Episode(string id)
+        public async Task<IActionResult> Episode(int id)
         {
-            bool isStringNullOrEmpty = generalServices.IsStringNullOrEmpty(id);
+            Episode? episode = await episodeServices.GetEpisodeWithSeasons(id);
 
-            if (isStringNullOrEmpty)
+            if (episode is null) 
             {
                 return NotFound();
             }
-
-            bool isIntValid = generalServices.isIntValid(id);
-
-            if (!isIntValid)
-            {
-                return BadRequest();
-            }
-
-            int episodeId = generalServices.GetIntFromString(id);
-
-            bool episodeExist = await episodeServices.EpisodeExistInDatabase(episodeId);
-
-            if (!episodeExist)
-            {
-                return NotFound();
-            }
-
-            Episode episode = await episodeServices.GetEpisodeWithSeasons(episodeId);
 
             DeleteEpisodeViewModel model = new DeleteEpisodeViewModel()
             {
@@ -136,32 +80,14 @@ namespace ShowTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Episode(string id, DeleteEpisodeViewModel model)
+        public async Task<IActionResult> Episode(int id, DeleteEpisodeViewModel model)
         {
-            bool isStringNullOrEmpty = generalServices.IsStringNullOrEmpty(id);
+            Episode? episode = await episodeServices.GetEpisodeWithSeasons(id);
 
-            if (isStringNullOrEmpty)
+            if (episode is null) 
             {
                 return NotFound();
             }
-
-            bool isIntValid = generalServices.isIntValid(id);
-
-            if (!isIntValid)
-            {
-                return BadRequest();
-            }
-
-            int episodeIntId = generalServices.GetIntFromString(id);
-
-            bool episodeExist = await episodeServices.EpisodeExistInDatabase(episodeIntId);
-
-            if (!episodeExist)
-            {
-                return NotFound();
-            }
-
-            Episode episode = await episodeServices.GetEpisodeWithSeasons(episodeIntId);
 
             try
             {

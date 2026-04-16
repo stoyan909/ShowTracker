@@ -8,12 +8,10 @@ namespace ShowTracker.Controllers
     public class ExploreController : BaseController
     {
         private readonly IExploreServices exploreServices;
-        private readonly IGeneralServices generalServices;
 
-        public ExploreController(IExploreServices exploreServices, IGeneralServices generalServices)
+        public ExploreController(IExploreServices exploreServices)
         {
             this.exploreServices = exploreServices;
-            this.generalServices = generalServices;
         }
 
         [HttpGet]
@@ -27,7 +25,7 @@ namespace ShowTracker.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SearchShow(string input)
         {
-            if (generalServices.IsStringNullOrEmpty(input))
+            if (string.IsNullOrWhiteSpace(input))
             {
                 TempData["ErrorMessage"] = "Search input was empthy.";
                 return RedirectToAction("Index","Home");

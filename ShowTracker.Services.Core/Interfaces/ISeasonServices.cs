@@ -5,12 +5,12 @@ namespace ShowTracker.Services.Core.Interfaces
 {
     public interface ISeasonServices
     {
-        Task<Season> GetSeason(Guid id);
+        Task<Season?> GetSeason(Guid id);
 
         Task<bool> SeasonExistInDataBase(Guid id);
 
         Task SaveSeasonChanges(Season season);
 
-        Task AddNewEpisodeToSeasonAndSaveToDatabase(Season season,CreateEpisodeViewModel model);
+        Task AddNewEpisodeToSeasonAndSaveToDatabase(Season season,Episode episode);
     }
 }

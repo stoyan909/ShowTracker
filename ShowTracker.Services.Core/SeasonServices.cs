@@ -14,24 +14,16 @@ namespace ShowTracker.Services.Core
             this.dbContext = dbContext;
         }
 
-        public async Task AddNewEpisodeToSeasonAndSaveToDatabase(Season season, CreateEpisodeViewModel model)
+        public async Task AddNewEpisodeToSeasonAndSaveToDatabase(Season season, Episode episode)
         {
-            Episode episode = new Episode
-            {
-                EpisodeTitle = model.EpisodeTitle,
-                ReleaseDate = model.ReleaseDate,
-                ImageUrl = model.ImageUrl,
-                SeasonId = model.SeasonId
-            };
-
             season.Episodes.Add(episode);
             await dbContext.Episodes.AddAsync(episode);
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<Season> GetSeason(Guid id)
+        public async Task<Season?> GetSeason(Guid id)
         {
-            return await dbContext.Seasons.Where(s => s.Id == id).FirstAsync();
+            return await dbContext.Seasons.Where(s => s.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task SaveSeasonChanges(Season season)

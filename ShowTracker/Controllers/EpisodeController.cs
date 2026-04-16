@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ShowTracker.Data.Models;
-using ShowTracker.Services.Core;
 using ShowTracker.Services.Core.Interfaces;
 using ShowTracker.ViewModel.EpisodesViewModel;
-using ShowTracker.ViewModel.ShowsViewModel;
 
 namespace ShowTracker.Controllers
 {
@@ -11,32 +10,20 @@ namespace ShowTracker.Controllers
     {
         private readonly IShowServices showServices;
         private readonly ISeasonServices seasonServices;
-        private readonly IGeneralServices generalServices;
         private readonly IEpisodeServices episodeServices;
-        public EpisodeController(IShowServices showServices, ISeasonServices seasonServices, IGeneralServices generalServices, IEpisodeServices episodeServices)
+        private readonly IMapper mapper;
+        public EpisodeController(IShowServices showServices, IMapper mapper, ISeasonServices seasonServices, IEpisodeServices episodeServices)
         {
             this.showServices = showServices;
+            this.mapper = mapper;
             this.seasonServices = seasonServices;
-            this.generalServices = generalServices;
             this.episodeServices = episodeServices;
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddNewEpisode(string id)
+        public async Task<IActionResult> AddNewEpisode(Guid id)
         {
-            if (generalServices.IsStringNullOrEmpty(id))
-            {
-                return NotFound();
-            }
-
-            if (!generalServices.isGuidValid(id))
-            {
-                return BadRequest();
-            }
-
-            Guid seasonId = generalServices.GetGuidFromString(id);
-
-            bool seasonExist = await seasonServices.SeasonExistInDataBase(seasonId);
+            bool seasonExist = await seasonServices.SeasonExistInDataBase(id);
 
             if (!seasonExist)
             {
@@ -45,7 +32,7 @@ namespace ShowTracker.Controllers
 
             CreateEpisodeViewModel model = new CreateEpisodeViewModel
             {
-                SeasonId = seasonId
+                SeasonId = id
             };
 
             return View(model);
@@ -59,18 +46,18 @@ namespace ShowTracker.Controllers
                 return View(model);
             }
 
-            bool seasonExist = await seasonServices.SeasonExistInDataBase(model.SeasonId);
+            Season? season = await seasonServices.GetSeason(model.SeasonId);
 
-            if (!seasonExist)
+            if (season is null) 
             {
                 return NotFound();
             }
 
-            Season season = await seasonServices.GetSeason(model.SeasonId);
+            Episode episode = mapper.Map<Episode>(model);
 
             try
             {
-                await seasonServices.AddNewEpisodeToSeasonAndSaveToDatabase(season, model);
+                await seasonServices.AddNewEpisodeToSeasonAndSaveToDatabase(season, episode);
 
                 return RedirectToAction(nameof(ShowController.Index), nameof(Show), new { id = season.ShowId, seasonNumber = season.SeasonNumber });
             }
@@ -83,39 +70,16 @@ namespace ShowTracker.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditEpisode(string id)
-        {
+        public async Task<IActionResult> EditEpisode(int id)
+        { 
+            Episode episode = await episodeServices.GetEpisodeWithSeasons(id);
 
-            if (generalServices.IsStringNullOrEmpty(id))
+            if (episode is null) 
             {
                 return NotFound();
             }
 
-            if (!generalServices.isIntValid(id))
-            {
-                return BadRequest();
-            }
-
-            int episodeId = generalServices.GetIntFromString(id);
-
-            bool episodeExist = await episodeServices.EpisodeExistInDatabase(episodeId);
-
-            if (!episodeExist)
-            {
-                return NotFound();
-            }
-
-            Episode episode = await episodeServices.GetEpisodeWithSeasons(episodeId);
-
-            EditEpisodeViewModel model = new EditEpisodeViewModel()
-            {
-                Id = episode.Id,
-                SeasonId = episode.SeasonId,
-                EpisodeTitle = episode.EpisodeTitle,
-                ReleaseDate = episode.ReleaseDate,
-                Season = episode.Season,
-                ImageUrl = episode.ImageUrl,
-            };
+            EditEpisodeViewModel model = mapper.Map<EditEpisodeViewModel>(episode);
 
             return View(model);
         }
@@ -128,14 +92,12 @@ namespace ShowTracker.Controllers
                 return View(model);
             }
 
-            bool episdeExist = await episodeServices.EpisodeExistInDatabase(model.Id);
+            Episode? episode = await episodeServices.GetEpisodeWithSeasons(model.Id);
 
-            if (!episdeExist)
+            if (episode is null) 
             {
                 return NotFound();
             }
-
-            Episode episode = await episodeServices.GetEpisodeWithSeasons(model.Id);
 
             Guid showId = episode.Season.ShowId;
             int seasonNumber = episode.Season.SeasonNumber;
@@ -156,7 +118,7 @@ namespace ShowTracker.Controllers
             }
         }
 
-        public async Task<IActionResult> EpisodeWatched(string id, Guid showId, int seasonNumber)
+        public async Task<IActionResult> EpisodeWatched(int id, Guid showId, int seasonNumber)
         {
             string userId = GetUserId()!;
 
@@ -168,37 +130,18 @@ namespace ShowTracker.Controllers
                 return RedirectToAction(nameof(ShowController.Index), nameof(Show), new { id = showId, seasonNumber = seasonNumber });
             }
 
-            if (generalServices.IsStringNullOrEmpty(id))
-            {
-                return NotFound();
-            }
-
-            if (!generalServices.isIntValid(id))
-            {
-                return BadRequest();
-            }
-
-            int episodeId = generalServices.GetIntFromString(id);
-
-            bool episodeExist = await episodeServices.EpisodeExistInDatabase(episodeId);
+            bool episodeExist = await episodeServices.EpisodeExistInDatabase(id);
 
             if (!episodeExist)
             {
                 return NotFound();
             }
 
-            bool episodeAlreadyWatched = await episodeServices.EpisodeAlreadyWatchedByUser(episodeId, userId);
+            bool episodeAlreadyWatched = await episodeServices.EpisodeAlreadyWatchedByUser(id, userId);
 
             try
             {
-                if (!episodeAlreadyWatched)
-                {
-                    await episodeServices.MarkEpisodeAsWatched(episodeId, userId);
-                }
-                else
-                {
-                    await episodeServices.UnmarkEpisodeAsWatched(episodeId, userId);
-                }
+                await episodeServices.WatchedEpisode(id, userId, episodeAlreadyWatched);
 
                 return RedirectToAction(nameof(ShowController.Index), nameof(Show), new { id = showId, seasonNumber = seasonNumber });
 

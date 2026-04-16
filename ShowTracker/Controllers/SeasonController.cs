@@ -7,18 +7,16 @@ namespace ShowTracker.Controllers
     public class SeasonController : Controller
     {
         private readonly IShowServices showServices;
-        private readonly IGeneralServices generalServices;
-        public SeasonController(IShowServices showServices, IGeneralServices generalServices)
+        public SeasonController(IShowServices showServices)
         {
             this.showServices = showServices;
-            this.generalServices = generalServices;
         }
 
         [HttpGet]
         public async Task<IActionResult> CreateSeason(Guid id, int count)
         {
 
-            Show show = await showServices.GetShowWithDetails(id);
+            Show? show = await showServices.GetShowWithDetails(id);
 
             if (show is null)
             {
@@ -45,7 +43,7 @@ namespace ShowTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteSeason(Guid id, int count)
         {
-            Show show = await showServices.GetShowWithDetails(id);
+            Show? show = await showServices.GetShowWithDetails(id);
 
             if (show is null) 
             {
