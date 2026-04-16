@@ -29,6 +29,27 @@ namespace ShowTracker.Services.Core
             return show;
         }
 
+        public async Task ToggleFollowAsync(Guid showId, string userId) 
+        {
+
+            bool userFollowsGivenShow = await UserShowContainsGivenShow(userId, showId);
+
+            if (!userFollowsGivenShow)
+            {
+                UsersShows usersShows = new UsersShows
+                {
+                    UserId = userId,
+                    ShowId = showId
+                };
+
+                await SaveNewUserShowToDataBase(usersShows);
+            }
+            else
+            {
+                await UnfollowShow(userId, showId);
+            }
+        }
+
         public Show AddMultipleSeasonToShow(Show show, int seasons)
         {
             for (int i = 1; i <= seasons; i++)
@@ -60,29 +81,6 @@ namespace ShowTracker.Services.Core
             }
         }
 
-        public Show EditShow(EditShowViewModel showViewModel)
-        {
-            Show show = new Show()
-            {
-                Id = showViewModel.Id,
-                Name = showViewModel.Name,
-                Description = showViewModel.Description
-            };
-
-            return show;
-        }
-
-        public UsersShows FollowShow(string userId, Guid showId)
-        {
-            UsersShows userShow = new UsersShows()
-            {
-                UserId = userId,
-                ShowId = showId
-            };
-
-            return userShow;
-        }
-
         public async Task GeneratePictureForShow(IFormFile? showPictureFile, string name, string id)
         {
             if (showPictureFile != null)
@@ -104,16 +102,16 @@ namespace ShowTracker.Services.Core
             }
         }
 
-        public async Task<Show> GetShowWithSeasonsAndEpisodesAndUsers(Guid id)
+        public async Task<Show?> GetShowWithDetails(Guid id)
         {
-             Show show = await dbContext.Shows
+             Show? show = await dbContext.Shows
                 .Where(s => s.Id == id)
                 .Include(s => s.Users)
                 .Include(s => s.Seasons)
                 .ThenInclude(s => s.Episodes)
                 .ThenInclude(e => e.Users)
                 .AsNoTracking()
-                .FirstAsync();
+                .FirstOrDefaultAsync();
 
             return show;
         }
@@ -123,7 +121,7 @@ namespace ShowTracker.Services.Core
             Season? lastSeason = show.Seasons
                 .OrderByDescending(s => s.SeasonNumber)
                 .FirstOrDefault();
-
+            
             if (lastSeason != null)
             {
                 dbContext.Seasons.Remove(lastSeason);

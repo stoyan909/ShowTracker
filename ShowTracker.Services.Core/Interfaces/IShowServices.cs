@@ -6,15 +6,15 @@ namespace ShowTracker.Services.Core.Interfaces
 {
     public interface IShowServices
     {
-        Task<Show> GetShowWithSeasonsAndEpisodesAndUsers(Guid id);
+        Task<Show?> GetShowWithDetails(Guid id);
 
         Task<bool> ShowExistInDatabase(Guid id);
+
+        Task ToggleFollowAsync(Guid showId, string userId);
 
         Task<bool> ShowExistInDatabase(string showTitle);
 
         Task<bool> UserShowContainsGivenShow(string userId, Guid showId);
-
-        UsersShows FollowShow(string userId, Guid showId);
 
         Task GeneratePictureForShow(IFormFile? picture, string name, string id);
 
@@ -31,8 +31,6 @@ namespace ShowTracker.Services.Core.Interfaces
         Task DeleteShow(Show show);
 
         Show AddMultipleSeasonToShow(Show show, int seasons);
-
-        Show EditShow(EditShowViewModel showViewModel);
 
         Show AddNewSeasonToShow(Show show);
 
