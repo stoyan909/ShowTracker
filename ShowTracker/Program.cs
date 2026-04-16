@@ -29,6 +29,8 @@ internal class Program
         builder.Services.AddAutoMapper(cfg =>
         {
             cfg.AddMaps(typeof(CreateShowProfile).Assembly);
+            cfg.AddMaps(typeof(EditShowProfile).Assembly);
+            cfg.AddMaps(typeof(EditEpisodeProfile).Assembly);
         });
 
         builder.Services.AddControllersWithViews();
