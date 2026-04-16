@@ -32,8 +32,8 @@ namespace ShowTracker.Services.Core.Interfaces
 
         Show AddMultipleSeasonToShow(Show show, int seasons);
 
-        Show AddNewSeasonToShow(Show show);
+        Show AddNewSeasonToShow(Show show, int count);
 
-        Task RemoveLastSeasonFromShow(Show show);
+        Task RemoveLastSeasonFromShow(Show show, int count);
     }
 }

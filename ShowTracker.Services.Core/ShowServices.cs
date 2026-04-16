@@ -17,19 +17,21 @@ namespace ShowTracker.Services.Core
             this.dbContext = dbContext;
         }
 
-        public Show AddNewSeasonToShow(Show show)
+        public Show AddNewSeasonToShow(Show show, int count)
         {
-            show.Seasons.Add(
-                new Season()
-                {
-                    ShowId = show.Id,
-                    SeasonNumber = show.Seasons.Count + 1
-                });
-
+            for (int i = 0; i < count; i++)
+            {
+                show.Seasons.Add(
+                    new Season()
+                    {
+                        ShowId = show.Id,
+                        SeasonNumber = show.Seasons.Count + 1
+                    });
+            }
             return show;
         }
 
-        public async Task ToggleFollowAsync(Guid showId, string userId) 
+        public async Task ToggleFollowAsync(Guid showId, string userId)
         {
 
             bool userFollowsGivenShow = await UserShowContainsGivenShow(userId, showId);
@@ -104,28 +106,32 @@ namespace ShowTracker.Services.Core
 
         public async Task<Show?> GetShowWithDetails(Guid id)
         {
-             Show? show = await dbContext.Shows
-                .Where(s => s.Id == id)
-                .Include(s => s.Users)
-                .Include(s => s.Seasons)
-                .ThenInclude(s => s.Episodes)
-                .ThenInclude(e => e.Users)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
+            Show? show = await dbContext.Shows
+               .Where(s => s.Id == id)
+               .Include(s => s.Users)
+               .Include(s => s.Seasons)
+               .ThenInclude(s => s.Episodes)
+               .ThenInclude(e => e.Users)
+               .AsNoTracking()
+               .FirstOrDefaultAsync();
 
             return show;
         }
 
-        public async Task RemoveLastSeasonFromShow(Show show)
+        public async Task RemoveLastSeasonFromShow(Show show, int count)
         {
-            Season? lastSeason = show.Seasons
-                .OrderByDescending(s => s.SeasonNumber)
-                .FirstOrDefault();
-            
-            if (lastSeason != null)
+            for (int i = 0; i < count; i++)
             {
-                dbContext.Seasons.Remove(lastSeason);
-                await dbContext.SaveChangesAsync();   
+                Season? lastSeason = show.Seasons
+                    .OrderByDescending(s => s.SeasonNumber)
+                    .FirstOrDefault();
+
+                if (lastSeason != null)
+                {
+                    dbContext.Seasons.Remove(lastSeason);
+                    await dbContext.SaveChangesAsync();
+                }
+
             }
         }
 
@@ -163,8 +169,8 @@ namespace ShowTracker.Services.Core
 
         public async Task UnfollowShow(string userId, Guid showId)
         {
-             dbContext.UsersShows.RemoveRange(dbContext.UsersShows.Where(us => us.UserId == userId && us.ShowId == showId));
-             await dbContext.SaveChangesAsync();
+            dbContext.UsersShows.RemoveRange(dbContext.UsersShows.Where(us => us.UserId == userId && us.ShowId == showId));
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<bool> UserShowContainsGivenShow(string userId, Guid showId)

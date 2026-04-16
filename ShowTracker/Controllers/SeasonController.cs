@@ -15,43 +15,20 @@ namespace ShowTracker.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateSeason(string id, int? count)
+        public async Task<IActionResult> CreateSeason(Guid id, int count)
         {
-            if (generalServices.IsStringNullOrEmpty(id))
+
+            Show show = await showServices.GetShowWithDetails(id);
+
+            if (show is null)
             {
                 return NotFound();
             }
 
-            if (!generalServices.isGuidValid(id))
-            {
-                return BadRequest();
-            }
-
-            Guid showId = generalServices.GetGuidFromString(id);
-
-            bool showExist = await showServices.ShowExistInDatabase(showId);
-
-            if (!showExist)
-            {
-                return NotFound();
-            }
-
-            Show show = await showServices.GetShowWithSeasonsAndEpisodesAndUsers(showId);
+            show = showServices.AddNewSeasonToShow(show, count);
 
             try
             {
-                if (count != null)
-                {
-                    for (int i = 0; i < count; i++)
-                    {
-                        show = showServices.AddNewSeasonToShow(show);
-                    }
-                }
-                else 
-                {
-                    show = showServices.AddNewSeasonToShow(show);
-                }
-
                 await showServices.SaveEditShow(show);
 
                 return RedirectToAction("Index", nameof(Show), new { id = show.Id, seasonNumber = 1 });
@@ -66,28 +43,14 @@ namespace ShowTracker.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteSeason(string id, int? count)
+        public async Task<IActionResult> DeleteSeason(Guid id, int count)
         {
-            if (generalServices.IsStringNullOrEmpty(id))
+            Show show = await showServices.GetShowWithDetails(id);
+
+            if (show is null) 
             {
                 return NotFound();
             }
-
-            if (!generalServices.isGuidValid(id))
-            {
-                return BadRequest();
-            }
-
-            Guid showId = generalServices.GetGuidFromString(id);
-
-            bool showExist = await showServices.ShowExistInDatabase(showId);
-
-            if (!showExist)
-            {
-                return NotFound();
-            }
-
-            Show show = await showServices.GetShowWithSeasonsAndEpisodesAndUsers(showId);
 
             if (show.Seasons.Count() < 1)
             {
@@ -102,18 +65,7 @@ namespace ShowTracker.Controllers
 
             try
             {
-                if (count != null)
-                {
-                    for (int i = 0; i < count; i++)
-                    {
-                        await showServices.RemoveLastSeasonFromShow(show);
-                    }
-                }
-                else
-                {
-                    await showServices.RemoveLastSeasonFromShow(show);
-                }
-
+                await showServices.RemoveLastSeasonFromShow(show, count);
                 return RedirectToAction("Index", nameof(Show), new { id = show.Id, seasonNumber = 1 });
             }
             catch (Exception e)
