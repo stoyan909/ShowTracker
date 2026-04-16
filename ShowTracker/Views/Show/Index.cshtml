@@ -58,7 +58,7 @@
 
     <!-- SEASONS -->
     <div class="season-posters">
-        <a asp-controller="Season" asp-action="CreateSeason" asp-route-id="@Model.Id" class="addseason-btn">
+        <a asp-controller="Season" asp-action="CreateSeason" asp-route-id="@Model.Id" asp-route-count="1" class="addseason-btn">
             Add season
         </a>
         @for (int i = 1; i <= Model.Seasons.Count(); i++) 
@@ -67,7 +67,7 @@
                 Season @i
             </a>
         }
-        <a asp-controller="Season" asp-action="DeleteSeason" asp-route-id="@Model.Id" class="removeseason-btn">
+        <a asp-controller="Season" asp-action="DeleteSeason" asp-route-id="@Model.Id" asp-route-count="1" class="removeseason-btn">
             Remove season
         </a>
     </div>
