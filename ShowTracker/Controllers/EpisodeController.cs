@@ -120,7 +120,7 @@ namespace ShowTracker.Controllers
 
         public async Task<IActionResult> EpisodeWatched(int id, Guid showId, int seasonNumber)
         {
-            string userId = GetUserId()!;
+            Guid userId = GetUserId()!;
 
             bool userFollowsShow = await showServices.UserShowContainsGivenShow(userId, showId);
 

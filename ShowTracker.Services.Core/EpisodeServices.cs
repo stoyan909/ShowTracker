@@ -34,7 +34,7 @@ namespace ShowTracker.Services.Core
             return episode;
         }
 
-        public Task<bool> EpisodeAlreadyWatchedByUser(int id, string userId)
+        public Task<bool> EpisodeAlreadyWatchedByUser(int id, Guid userId)
         {
             return dbContext.UsersEpisodes.AnyAsync(ue => ue.EpisodeId == id && ue.UserId == userId);
         }
@@ -53,7 +53,7 @@ namespace ShowTracker.Services.Core
                 
         }
 
-        public async Task WatchedEpisode(int id, string userId, bool hasWatched)
+        public async Task WatchedEpisode(int id, Guid userId, bool hasWatched)
         {
             if (!hasWatched)
             {

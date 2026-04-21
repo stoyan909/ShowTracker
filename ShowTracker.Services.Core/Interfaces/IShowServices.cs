@@ -10,17 +10,17 @@ namespace ShowTracker.Services.Core.Interfaces
 
         Task<bool> ShowExistInDatabase(Guid id);
 
-        Task ToggleFollowAsync(Guid showId, string userId);
+        Task ToggleFollowAsync(Guid showId, Guid userId);
 
         Task<bool> ShowExistInDatabase(string showTitle);
 
-        Task<bool> UserShowContainsGivenShow(string userId, Guid showId);
+        Task<bool> UserShowContainsGivenShow(Guid userId, Guid showId);
 
         Task GeneratePictureForShow(IFormFile? picture, string name, string id);
 
         void DeleteShowPicture(Show show);
 
-        Task UnfollowShow(string userId, Guid showId);
+        Task UnfollowShow(Guid userId, Guid showId);
 
         Task SaveNewUserShowToDataBase(UsersShows userShow);
 

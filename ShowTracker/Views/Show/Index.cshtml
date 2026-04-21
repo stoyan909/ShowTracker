@@ -7,7 +7,7 @@
 }
 
 @{
-    string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+    Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 }
 
 <link rel="stylesheet" href="~/css/show.css" />

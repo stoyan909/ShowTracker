@@ -5,7 +5,7 @@ using ShowTracker.Data.Models;
 
 namespace ShowTracker.Data
 {
-    public class ShowTrackerDbContext : IdentityDbContext<IdentityUser>
+    public class ShowTrackerDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public ShowTrackerDbContext(DbContextOptions<ShowTrackerDbContext> options)
             : base(options)

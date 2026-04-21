@@ -47,7 +47,7 @@ namespace ShowTracker.Controllers
                 return NotFound();
             }
 
-            string userId = GetUserId()!;
+            Guid userId = GetUserId()!;
 
             await showServices.ToggleFollowAsync(id, userId);
 

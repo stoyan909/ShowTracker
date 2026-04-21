@@ -7,11 +7,11 @@ namespace ShowTracker.Services.Core.Interfaces
     {
         Task SaveEpisodeChanges(Episode episode);
 
-        Task WatchedEpisode(int id, string userId, bool hasWatched);
+        Task WatchedEpisode(int id, Guid userId, bool hasWatched);
 
         Task<bool> EpisodeExistInDatabase(int id);
 
-        Task<bool> EpisodeAlreadyWatchedByUser(int id, string userId);
+        Task<bool> EpisodeAlreadyWatchedByUser(int id, Guid userId);
 
         Task<Episode?> GetEpisodeWithSeasons(int id);
 

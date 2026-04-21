@@ -4,9 +4,9 @@ namespace ShowTracker.Data.Models
 {
     public class UsersShows
     {
-        public string UserId { get; set; } = null!;
+        public Guid UserId { get; set; }
 
-        public virtual IdentityUser User { get; set; } = null!;
+        public virtual ApplicationUser User { get; set; } = null!;
 
         public Guid ShowId { get; set; }
 

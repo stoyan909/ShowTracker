@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace ShowTracker.Data.Models
+﻿namespace ShowTracker.Data.Models
 {
     public class UserEpisodes
     {
-        public string UserId { get; set; } = null!;
+        public Guid UserId { get; set; }
 
-        public virtual IdentityUser User { get; set; } = null!;
+        public virtual ApplicationUser User { get; set; } = null!;
 
         public int EpisodeId { get; set; }
 

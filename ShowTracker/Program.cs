@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShowTracker.Data;
+using ShowTracker.Data.Models;
 using ShowTracker.Mapping;
 using ShowTracker.Services.Core;
 using ShowTracker.Services.Core.Interfaces;
@@ -17,12 +18,14 @@ internal class Program
             options.UseSqlServer(connectionString));
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => ConfigureIdentity(options, builder.Configuration))
+        builder.Services.AddDefaultIdentity<ApplicationUser>(options => ConfigureIdentity(options, builder.Configuration))
+            .AddRoles<IdentityRole<Guid>>()
             .AddEntityFrameworkStores<ShowTrackerDbContext>();
 
+        builder.Services.AddRazorPages();
+
         builder.Services.AddScoped<IExploreServices, ExploreServices>();
-        builder.Services.AddScoped<IShowServices, ShowServices>();     
-        builder.Services.AddScoped<IGeneralServices, GeneralServices>();   
+        builder.Services.AddScoped<IShowServices, ShowServices>();      
         builder.Services.AddScoped<ISeasonServices, SeasonServices>();
         builder.Services.AddScoped<IEpisodeServices, EpisodeServices>();
 

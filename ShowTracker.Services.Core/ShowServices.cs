@@ -31,7 +31,7 @@ namespace ShowTracker.Services.Core
             return show;
         }
 
-        public async Task ToggleFollowAsync(Guid showId, string userId)
+        public async Task ToggleFollowAsync(Guid showId, Guid userId)
         {
 
             bool userFollowsGivenShow = await UserShowContainsGivenShow(userId, showId);
@@ -167,13 +167,13 @@ namespace ShowTracker.Services.Core
             return showExist;
         }
 
-        public async Task UnfollowShow(string userId, Guid showId)
+        public async Task UnfollowShow(Guid userId, Guid showId)
         {
             dbContext.UsersShows.RemoveRange(dbContext.UsersShows.Where(us => us.UserId == userId && us.ShowId == showId));
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> UserShowContainsGivenShow(string userId, Guid showId)
+        public async Task<bool> UserShowContainsGivenShow(Guid userId, Guid showId)
         {
             return await dbContext.UsersShows.AnyAsync(us => us.UserId == userId && us.ShowId == showId);
         }
