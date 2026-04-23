@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.12.35521.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowTracker", "ShowTracker.csproj", "{C3F403D9-DA3F-4602-B77C-5DA38511CA5C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BA890F33-8AE6-4303-A64F-42263385C45A} = {BA890F33-8AE6-4303-A64F-42263385C45A}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{069E432E-B5B9-415B-AFE6-04053D6A231E}"
 EndProject
@@ -22,6 +25,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowTracker.ViewModel", "..\ShowTracker.ViewModel\ShowTracker.ViewModel.csproj", "{340B7912-10D4-40C6-A741-1324F106B8A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowTracker.Mapping", "..\ShowTracker.Mapping\ShowTracker.Mapping.csproj", "{BAF50615-967C-4A95-B797-E5EA1FF1BA3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowTracker.Infrastructures", "..\ShowTracker.Infrastructures\ShowTracker.Infrastructures.csproj", "{BA890F33-8AE6-4303-A64F-42263385C45A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +62,10 @@ Global
 		{BAF50615-967C-4A95-B797-E5EA1FF1BA3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAF50615-967C-4A95-B797-E5EA1FF1BA3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAF50615-967C-4A95-B797-E5EA1FF1BA3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA890F33-8AE6-4303-A64F-42263385C45A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA890F33-8AE6-4303-A64F-42263385C45A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA890F33-8AE6-4303-A64F-42263385C45A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA890F33-8AE6-4303-A64F-42263385C45A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,5 +77,6 @@ Global
 		{2F8FBED0-CBA4-47BA-AE9D-A3C311F438AD} = {61B916D9-EB58-4C8B-AB35-B63F4519528E}
 		{340B7912-10D4-40C6-A741-1324F106B8A4} = {069E432E-B5B9-415B-AFE6-04053D6A231E}
 		{BAF50615-967C-4A95-B797-E5EA1FF1BA3E} = {61B916D9-EB58-4C8B-AB35-B63F4519528E}
+		{BA890F33-8AE6-4303-A64F-42263385C45A} = {069E432E-B5B9-415B-AFE6-04053D6A231E}
 	EndGlobalSection
 EndGlobal

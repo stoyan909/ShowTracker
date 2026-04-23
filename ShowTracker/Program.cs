@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShowTracker.Data;
 using ShowTracker.Data.Models;
+using ShowTracker.Infrastructures;
 using ShowTracker.Mapping;
 using ShowTracker.Services.Core;
 using ShowTracker.Services.Core.Interfaces;
@@ -28,6 +29,7 @@ internal class Program
         builder.Services.AddScoped<IShowServices, ShowServices>();      
         builder.Services.AddScoped<ISeasonServices, SeasonServices>();
         builder.Services.AddScoped<IEpisodeServices, EpisodeServices>();
+        builder.Services.AddTransient<IIdentitySeeder, IdentitySeeder>();
 
         builder.Services.AddAutoMapper(cfg =>
         {
@@ -59,6 +61,9 @@ internal class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
+        //Todo mahna depenci sus services
+        app.UseRoleSeeder();
+        app.UseAdminUserSeeder();
 
         app.MapControllerRoute(
             name: "default",
