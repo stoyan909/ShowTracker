@@ -35,15 +35,15 @@
         margin-bottom: 20px;
     }
 
-.btn {
+.button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #2d89ef;
+    background-color: #2563eb;
     color: white;
     text-decoration: none;
     border-radius: 6px;
 }
 
-    .btn:hover {
-        background-color: #1b5fbf;
+    .button:hover {
+        background-color: #3b82f6;
     }
