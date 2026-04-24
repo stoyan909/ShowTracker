@@ -26,7 +26,7 @@ internal class Program
         builder.Services.AddRazorPages();
 
         builder.Services.AddScoped<IExploreServices, ExploreServices>();
-        builder.Services.AddScoped<IShowServices, ShowServices>();      
+        builder.Services.AddScoped<IShowServices, ShowServices>();
         builder.Services.AddScoped<ISeasonServices, SeasonServices>();
         builder.Services.AddScoped<IEpisodeServices, EpisodeServices>();
         builder.Services.AddTransient<IIdentitySeeder, IdentitySeeder>();
@@ -65,6 +65,9 @@ internal class Program
         app.UseRoleSeeder();
         app.UseAdminUserSeeder();
 
+        app.MapControllerRoute(
+            name: "adminArea",
+            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");

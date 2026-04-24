@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<link rel="stylesheet" href="~/css/admin.css" />
+
+<div class="dashboard">
+    <h1>Admin Dashboard</h1>
+
+    <div class="cards">
+
+        <div class="card">
+            <h2>User Management</h2>
+            <p>Manage users, roles, and permissions.</p>
+            <a asp-controller="Users" asp-action="Index" class="btn">Open</a>
+        </div>
+
+        <div class="card">
+            <h2>Show Management</h2>
+            <p>Create and manage shows.</p>
+            <a asp-controller="Shows" asp-action="Index" class="btn">Open</a>
+        </div>
+
+    </div>
+</div>
