@@ -32,32 +32,32 @@ namespace ShowTracker.Infrastructures
 
             ApplicationUser? adminUser = await userManager.FindByEmailAsync(adminEmail);
 
-            if (adminUser == null) 
+            if (adminUser == null)
             {
                 adminUser = new ApplicationUser
                 {
                     Email = adminEmail,
                     UserName = adminEmail,
                 };
-            }
 
-            IdentityResult result = await userManager.CreateAsync(adminUser, adminPassword);
+                IdentityResult result = await userManager.CreateAsync(adminUser, adminPassword);
 
-            if (!result.Succeeded) 
-            {
-                throw new InvalidOperationException("There was an error why trying to seed admin user");
-            }
+                if (!result.Succeeded)
+                {
+                    throw new InvalidOperationException("There was an error why trying to seed admin user");
+                }
 
-            bool isInRole = await userManager.IsInRoleAsync(adminUser, applicationRoles[0]);
+                bool isInRole = await userManager.IsInRoleAsync(adminUser, applicationRoles[0]);
 
-            if (!isInRole) 
-            {
-                result = await userManager.AddToRoleAsync(adminUser, applicationRoles[0]);
-            }
+                if (!isInRole)
+                {
+                    result = await userManager.AddToRoleAsync(adminUser, applicationRoles[0]);
+                }
 
-            if (!result.Succeeded) 
-            {
-                throw new InvalidOperationException("There was an error why trying to seed admin user");
+                if (!result.Succeeded)
+                {
+                    throw new InvalidOperationException("There was an error why trying to seed admin user");
+                }
             }
         }
 
