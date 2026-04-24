@@ -30,6 +30,7 @@ internal class Program
         builder.Services.AddScoped<ISeasonServices, SeasonServices>();
         builder.Services.AddScoped<IEpisodeServices, EpisodeServices>();
         builder.Services.AddTransient<IIdentitySeeder, IdentitySeeder>();
+        builder.Services.AddTransient<IAdminServices, AdminServices>();
 
         builder.Services.AddAutoMapper(cfg =>
         {

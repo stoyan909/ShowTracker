@@ -1,0 +1,104 @@
+﻿
+h2 {
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+
+table {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+
+.table {
+    margin-top: 15px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+    .table thead {
+        background: #2c3e50 !important;
+        color: #fff;
+    }
+
+        .table thead th {
+            padding: 14px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+    .table tbody td {
+        vertical-align: middle;
+        padding: 14px;
+        font-size: 14px;
+    }
+
+
+    .table tbody tr {
+        transition: background 0.2s ease;
+    }
+
+        .table tbody tr:hover {
+            background-color: #f4f6f8;
+        }
+
+
+.form-select {
+    border-radius: 8px;
+    border: 1px solid #dcdfe3;
+    padding: 6px 10px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+    .form-select:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 0.15rem rgba(52,152,219,0.25);
+    }
+
+
+.btn {
+    border-radius: 8px;
+    font-size: 13px;
+    padding: 6px 12px;
+    transition: all 0.2s ease;
+}
+
+.btn-success {
+    background-color: #2ecc71;
+    border: none;
+}
+
+    .btn-success:hover {
+        background-color: #27ae60;
+    }
+
+.btn-danger {
+    background-color: #e74c3c;
+    border: none;
+}
+
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+
+
+td .btn {
+    margin-right: 5px;
+}
+
+td:first-child {
+    font-weight: 500;
+    color: #34495e;
+}
+
+
+form {
+    margin: 0;
+}
+
