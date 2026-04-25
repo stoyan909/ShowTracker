@@ -5,6 +5,7 @@
 
 @{
 	ViewBag.Title = "Shows";
+	Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 }
 
 <link rel="stylesheet" href="~/css/explore.css" />
@@ -40,7 +41,7 @@
 							</div>
 						@if (User.Identity != null && User.Identity.IsAuthenticated)
 						{
-							if (show.Users.Any(us=>us.ShowId==show.Id))
+							if (show.Users.Any(u => u.UserId == userId))
 							{
 								<a class="follow-btn" asp-controller="Show" asp-action="FollowShow" asp-route-id="@show.Id">
 									Unfollow

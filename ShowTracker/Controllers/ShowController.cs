@@ -120,7 +120,7 @@ namespace ShowTracker.Controllers
                 return View(model);
             }
 
-            Show show = await showServices.GetShowWithDetails(model.Id);
+            Show? show = await showServices.GetShowWithDetails(model.Id);
 
             if (show is null) 
             {

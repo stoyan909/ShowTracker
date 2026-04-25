@@ -1,0 +1,79 @@
+﻿@using ShowTracker.Data.Models
+@model IEnumerable<Show>
+
+@{
+    ViewData["Title"] = "Show Management";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+
+<h2 class="page-title">User Management</h2>
+
+<div class="table-container">
+    <table class="table table-bordered table-striped user-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Seasons</th>
+                <th>Total episodes</th>
+                <th>Count of followers for show</th>
+                <th style="width: 220px;">Manage show</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var show in Model)
+            {
+                int totalEpisodes = 0;
+
+                <tr>
+                    <form asp-action="UpdateUserRole" method="post">
+                        <td class="email-cell">
+                            @show.Name
+                            <input type="hidden" name="Id" value="@show.Id" />
+                        </td>
+
+                        <td class="email-cell">
+                            @show.Seasons.Count()
+                            <input type="hidden" name="Id" value="@show.Id" />
+                        </td>                            
+                        @foreach (var season in show.Seasons) 
+                        {
+                            totalEpisodes += season.Episodes.Count();
+                        }
+                            <td class="email-cell">
+                                @totalEpisodes
+                                <input type="hidden" name="Id" value="@show.Id" />
+                            </td>  
+                        <td class="email-cell">
+                            @show.Users.Count()
+                            <input type="hidden" name="Id" value="@show.Id" />
+                        </td>
+                            <td class="actions-cell">
+                                    <a 
+                                    asp-area=""
+                                    asp-controller ="Show" 
+                                    asp-action="Index" 
+                                    asp-route-id="@show.Id"
+                                    asp-route-seasonNumber="1"
+                                    class="btn btn-success btn-sm action-btn">
+                                    Manage show
+                                </a>
+
+                                <a asp-action="DeleteUser"
+                                   asp-route-id="@show.Id"
+                                   class="btn btn-danger btn-sm action-btn">
+                                    Delete user
+                                </a>
+                            </td>
+                        </form>
+                    </tr>
+            }
+        </tbody>
+    </table>
+</div>
