@@ -1,0 +1,32 @@
+﻿@using ShowTracker.Data.Models
+@model ApplicationUser
+
+@{
+    ViewBag.Title = "Delete User";
+}
+
+<h2 class="text-center my-4">@ViewBag.Title</h2>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h3 class="card-title fw-bold mb-3">@Model.UserName</h3>
+
+                <p class="text-danger fs-5 mt-4">
+                    Are you sure you want to delete <strong>@Model.UserName</strong>?
+                </p>
+            </div>
+
+            <div class="card-footer d-flex justify-content-center gap-3">
+                <form asp-action="DeleteUser" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger px-4">
+                        Confirm Delete
+                    </button>
+                </form>
+
+                <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

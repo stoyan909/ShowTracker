@@ -15,7 +15,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ShowTracker</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -25,7 +25,13 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Explore" asp-action="Index">Explore</a>
-                        </li>
+                        </li>            
+                        @if (User.IsInRole("Admin")) 
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin dashboard</a>
+                            </li>
+                        }
                         <form class="nav-search" method="GET" asp-controller="Explore" asp-action="SearchShow">
                             <input type="text" name="input" class="nav-search-input" placeholder="Search shows..." >
                             <button type="submit" class="nav-search-btn">🔍</button>
