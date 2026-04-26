@@ -8,7 +8,6 @@
 
 @{
     Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-    bool userIsAdmin = User.IsInRole("Admin");
 }
 
 <link rel="stylesheet" href="~/css/show.css" />
@@ -40,41 +39,55 @@
             <h1>@Model.Name</h1>
             <p>@Model.Description</p>
 
-            @if (Model.Users.Any(u => u.UserId == userId))
-            {
-                <a class="follow-btn"
+                <a asp-area="Admin"
                    asp-controller="Show"
-                   asp-action="FollowShow"
-                   asp-route-id="@Model.Id">
-                    Unfollow
+                   asp-action="EditShow"
+                   asp-route-id="@Model.Id"
+                   class="edit-btn">
+                    Edit show
                 </a>
-            }
-            else
-            {
-                <a class="follow-btn"
-                   asp-controller="Show"
-                   asp-action="FollowShow"
-                   asp-route-id="@Model.Id">
-                    Follow
+
+                <a asp-area="Admin"
+                   asp-controller="Delete"
+                   asp-action="Show"
+                   asp-route-id="@Model.Id"
+                   class="delete-btn">
+                    Delete show
                 </a>
-            }
         </div>
     </div>
 
     <!-- SEASONS -->
     <div class="season-posters">
 
+            <a asp-area="Admin"
+               asp-controller="Season"
+               asp-action="CreateSeason"
+               asp-route-id="@Model.Id"
+               asp-route-count="1"
+               class="addseason-btn">
+                Add season
+            </a>
+
         @for (int i = 1; i <= Model.Seasons.Count(); i++)
         {
-            <a asp-controller="Show"
-               asp-action="Index"
+            <a asp-area="Admin"
+               asp-controller="Show"
+               asp-action="Show"
                asp-route-id="@Model.Id"
                asp-route-seasonNumber="@i"
                class="season-btn">
                 Season @i
             </a>
         }
-
+            <a asp-area="Admin"
+               asp-controller="Season"
+               asp-action="DeleteSeason"
+               asp-route-id="@Model.Id"
+               asp-route-count="1"
+               class="removeseason-btn">
+                Remove season
+            </a>
     </div>
 
     <!-- CURRENT SEASON -->
@@ -86,6 +99,15 @@
     <div class="episodes">
         <h2>Season @currentSeason.SeasonNumber</h2>
 
+            <div class="episode-actions">
+                <a asp-area="Admin"
+                   asp-controller="Episode"
+                   asp-action="AddNewEpisode"
+                   asp-route-id="@currentSeason.Id"
+                   class="addseason-btn">
+                    + Add New Episode
+                </a>
+            </div>
         <div class="episode-grid">
             @{
                 Episode[] episodes = currentSeason.Episodes.ToArray();
@@ -107,31 +129,21 @@
                             </p>
                         </div>
 
-                        @if (!currentEpisode.Users.Any(u => u.UserId == userId))
-                        {
-                            <form asp-action="EpisodeWatched"
-                                  asp-controller="Episode"
-                                  class="watched-btn">
-                                <input type="hidden" name="id" value="@currentEpisode.Id" />
-                                <input type="hidden" name="showId" value="@Model.Id" />
-                                <input type="hidden" name="seasonNumber" value="@currentSeason.SeasonNumber" />
+                            <a asp-area="Admin"
+                               asp-controller="Episode"
+                               asp-action="EditEpisode"
+                               asp-route-id="@currentEpisode.Id"
+                               class="edit-episode-btn">
+                                Edit episode
+                            </a>
 
-                                <button type="submit">Watched</button>
-                            </form>
+                            <a asp-area="Admin"
+                               asp-controller="Delete"
+                               asp-action="Episode"
+                               asp-route-id="@currentEpisode.Id"
+                               class="remove-episode-btn">
+                                Remove episode
+                            </a>
                         }
-                        else
-                        {
-                            <form asp-action="EpisodeWatched"
-                                  asp-controller="Episode"
-                                  class="unwatched-btn">
-                                <input type="hidden" name="id" value="@currentEpisode.Id" />
-                                <input type="hidden" name="showId" value="@Model.Id" />
-                                <input type="hidden" name="seasonNumber" value="@currentSeason.SeasonNumber" />
-
-                                <button type="submit">Unwatched</button>
-                            </form>
-                        }
-
                     </div>
-                }
-            }
+                }}

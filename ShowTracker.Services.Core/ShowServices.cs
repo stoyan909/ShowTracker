@@ -16,6 +16,15 @@ namespace ShowTracker.Services.Core
         {
             this.dbContext = dbContext;
         }
+        public async Task<IEnumerable<Show>> GetAllShowWithDetailsAsync()
+        {
+            return await dbContext.Shows
+                .Include(s => s.Users)
+                .Include(s => s.Seasons)
+                .ThenInclude(s => s.Episodes)
+                .ToListAsync();
+
+        }
 
         public Show AddNewSeasonToShow(Show show, int count)
         {

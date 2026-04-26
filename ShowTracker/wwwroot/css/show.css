@@ -1,5 +1,4 @@
-﻿
-/* CONTAINER */
+﻿/* CONTAINER */
 .container {
     width: 90%;
     margin: auto;
@@ -31,114 +30,72 @@
     font-weight: 600;
 }
 
-.season-btn {
-    background: #334155;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.2s;
-    font-size: 14px;
-    text-decoration: none
-}
-
-.season-btn:hover {
-    background: #475569;
-}
-
-.addseason-btn {
-    background: #2563eb;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.2s;
-    font-size: 14px;
-    text-decoration: none
-}
-
-    .addseason-btn:hover {
-        background: #3b82f6;
-    }
-
-.removeseason-btn {
-    background: #dc2626;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.2s;
-    font-size: 14px;
-    text-decoration: none
-}
-
-    .removeseason-btn:hover {
-        background: #ef4444;
-    }
-
-.season-btn.active {
-    background: #3b82f6;
-    color: white;
-}
-
 .show-info p {
     margin: 10px 0;
     line-height: 1.5;
 }
 
-/* FOLLOW BUTTON */
-.follow-btn {
-    margin-top: 15px;
-    margin-right: 10px;
-    padding: 8px 16px;
-    background: #334155;
+/* 🔁 SHARED BUTTON BASE (no HTML changes needed) */
+.season-btn,
+.addseason-btn,
+.removeseason-btn,
+.follow-btn,
+.edit-btn,
+.delete-btn {
     border: none;
-    color: white;
+    padding: 8px 16px;
     border-radius: 6px;
     cursor: pointer;
     transition: 0.2s;
-    text-decoration: none
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
 }
 
+/* INDIVIDUAL BUTTON COLORS */
+.season-btn,
+.follow-btn {
+    background: #334155;
+}
+
+    .season-btn:hover,
     .follow-btn:hover {
         background: #475569;
     }
 
+.addseason-btn,
 .edit-btn {
-    margin-top: 15px;
-    margin-right: 10px;
-    padding: 8px 16px;
     background: #2563eb;
-    border: none;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.2s;
-    text-decoration: none;
 }
 
+    .addseason-btn:hover,
     .edit-btn:hover {
         background: #3b82f6;
     }
 
+.removeseason-btn,
 .delete-btn {
-    margin-top: 15px;
-    padding: 8px 16px;
     background: #dc2626;
-    border: none;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.2s;
-    text-decoration: none;
 }
 
+    .removeseason-btn:hover,
     .delete-btn:hover {
         background: #ef4444;
     }
+
+/* SPACING (unchanged behavior) */
+.follow-btn,
+.edit-btn,
+.delete-btn {
+    margin-top: 15px;
+    margin-right: 10px;
+}
+
+/* ACTIVE */
+.season-btn.active {
+    background: #3b82f6;
+    color: white;
+}
 
 /* SEASON POSTERS */
 .season-posters {
@@ -166,13 +123,12 @@
             transform: scale(1.05);
         }
 
-/* EPISODES SECTION */
+/* EPISODES */
 .episodes h2 {
     margin-bottom: 15px;
     font-size: 20px;
 }
 
-/* GRID */
 .episode-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -181,7 +137,7 @@
 
 /* CARD */
 .episode-card {
-    background: #0f172a; /* match main layout */
+    background: #0f172a;
     border-radius: 12px;
     overflow: hidden;
     transition: 0.25s ease;
@@ -207,7 +163,7 @@
     .episode-info span {
         font-size: 13px;
         font-weight: 600;
-        color: #f97316; /* orange ep number */
+        color: #f97316;
     }
 
     .episode-info p {
@@ -216,25 +172,30 @@
         color: #e5e7eb;
     }
 
-/* TOP ACTION BAR */
+/* ACTIONS */
 .episode-actions {
     margin-bottom: 20px;
     display: flex;
     justify-content: flex-start;
 }
 
-/* REMOVE BUTTON INSIDE CARD */
-.remove-episode-btn {
+/* 🔁 CARD BUTTON BASE */
+.remove-episode-btn,
+.edit-episode-btn {
     display: block;
     text-align: center;
     margin: 10px;
     padding: 8px;
     border-radius: 6px;
-    background: #dc2626;
     color: white;
     text-decoration: none;
     font-size: 13px;
     transition: 0.2s;
+}
+
+/* COLORS */
+.remove-episode-btn {
+    background: #dc2626;
 }
 
     .remove-episode-btn:hover {
@@ -242,42 +203,45 @@
     }
 
 .edit-episode-btn {
-    display: block;
-    text-align: center;
-    margin: 10px;
-    padding: 8px;
-    border-radius: 6px;
     background: #2563eb;
-    color: white;
-    text-decoration: none;
-    font-size: 13px;
-    transition: 0.2s;
 }
 
     .edit-episode-btn:hover {
         background: #3b82f6;
     }
 
-.watched-btn {
+/* WATCHED / UNWATCHED */
+.watched-btn,
+.unwatched-btn {
     display: block;
     margin: 10px;
 }
 
-    .watched-btn button {
-        display: block;
+    .watched-btn button,
+    .unwatched-btn button {
         width: 100%;
-        text-align: center;
         padding: 8px;
         border-radius: 6px;
-        background: #eab308; /* yellow */
         color: white;
-        text-decoration: none;
         font-size: 13px;
         transition: 0.2s;
         border: none;
         cursor: pointer;
     }
 
+    /* COLORS */
+    .watched-btn button {
+        background: #eab308;
+    }
+
         .watched-btn button:hover {
-            background: #facc15; /* lighter yellow */
+            background: #facc15;
+        }
+
+    .unwatched-btn button {
+        background: #800080;
+    }
+
+        .unwatched-btn button:hover {
+            background: #9370DB;
         }

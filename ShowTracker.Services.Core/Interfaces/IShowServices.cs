@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using ShowTracker.Data.Models;
-using ShowTracker.ViewModel.ShowsViewModel;
 
 namespace ShowTracker.Services.Core.Interfaces
 {
     public interface IShowServices
     {
+        Task<IEnumerable<Show>> GetAllShowWithDetailsAsync();
         Task<Show?> GetShowWithDetails(Guid id);
 
         Task<bool> ShowExistInDatabase(Guid id);

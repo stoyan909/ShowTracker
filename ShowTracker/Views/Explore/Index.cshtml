@@ -5,7 +5,11 @@
 
 @{
 	ViewBag.Title = "Shows";
-	Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+	string userIdString = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+
+	Guid? userId = Guid.TryParse(userIdString, out Guid parsedUserId)
+		? parsedUserId
+		: null;
 }
 
 <link rel="stylesheet" href="~/css/explore.css" />

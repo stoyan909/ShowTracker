@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShowTracker.Controllers;
 using ShowTracker.Data.Models;
 using ShowTracker.Services.Core.Interfaces;
 using ShowTracker.ViewModel.EpisodesViewModel;
 using ShowTracker.ViewModel.ShowsViewModel;
 
-namespace ShowTracker.Controllers
+namespace ShowTracker.Areas.Admin.Controllers
 {
     public class DeleteController : BaseController
     {
@@ -21,7 +22,7 @@ namespace ShowTracker.Controllers
         {
             Show? show = await showServices.GetShowWithDetails(id);
 
-            if (show is null) 
+            if (show is null)
             {
                 return NotFound();
             }
@@ -40,7 +41,7 @@ namespace ShowTracker.Controllers
         {
             Show? show = await showServices.GetShowWithDetails(id);
 
-            if (show is null) 
+            if (show is null)
             {
                 return NotFound();
             }
@@ -50,7 +51,7 @@ namespace ShowTracker.Controllers
             try
             {
                 await showServices.DeleteShow(show);
-                return RedirectToAction(nameof(ExploreController.Index), "Explore");
+                return RedirectToAction(nameof(ExploreController.Index), nameof(Show));
             }
             catch (Exception e)
             {
@@ -65,7 +66,7 @@ namespace ShowTracker.Controllers
         {
             Episode? episode = await episodeServices.GetEpisodeWithSeasons(id);
 
-            if (episode is null) 
+            if (episode is null)
             {
                 return NotFound();
             }
@@ -84,7 +85,7 @@ namespace ShowTracker.Controllers
         {
             Episode? episode = await episodeServices.GetEpisodeWithSeasons(id);
 
-            if (episode is null) 
+            if (episode is null)
             {
                 return NotFound();
             }
@@ -92,7 +93,7 @@ namespace ShowTracker.Controllers
             try
             {
                 await episodeServices.DeleteEpisode(episode);
-                return RedirectToAction(nameof(ShowController.Index), nameof(Show), new {id = episode.Season.ShowId, seasonNumber = episode.Season.SeasonNumber});
+                return RedirectToAction(nameof(Show), nameof(Show), new { id = episode.Season.ShowId, seasonNumber = episode.Season.SeasonNumber });
             }
             catch (Exception e)
             {

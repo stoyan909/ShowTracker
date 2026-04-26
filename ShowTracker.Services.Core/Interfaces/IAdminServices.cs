@@ -10,7 +10,5 @@ namespace ShowTracker.Services.Core.Interfaces
         Task<IEnumerable<string>> GetRolesAsync(ApplicationUser applicationUser);
 
         IEnumerable<UsersAndRolesViewModel> GetUsersWithRoles(IEnumerable<ApplicationUser> users, IEnumerable<string> roles);
-
-        Task<IEnumerable<Show>> GetAllShowWithDetailsAsync();
     }
 }

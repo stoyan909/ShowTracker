@@ -18,16 +18,6 @@ namespace ShowTracker.Services.Core
 
         }
 
-        public async Task<IEnumerable<Show>> GetAllShowWithDetailsAsync()
-        {
-            return await dbContext.Shows
-                .Include(s => s.Users)
-                .Include(s => s.Seasons)
-                .ThenInclude(s => s.Episodes)
-                .ToListAsync();
-
-        }
-
         public async Task<IEnumerable<ApplicationUser>> GetAllUsersAsync(Guid userId)
         {
             return await dbContext.Users.Where(u => u.Id != userId).ToListAsync();

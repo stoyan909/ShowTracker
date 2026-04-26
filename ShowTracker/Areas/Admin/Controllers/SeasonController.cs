@@ -2,9 +2,9 @@
 using ShowTracker.Data.Models;
 using ShowTracker.Services.Core.Interfaces;
 
-namespace ShowTracker.Controllers
+namespace ShowTracker.Areas.Admin.Controllers
 {
-    public class SeasonController : Controller
+    public class SeasonController : BaseController
     {
         private readonly IShowServices showServices;
         public SeasonController(IShowServices showServices)
@@ -29,13 +29,13 @@ namespace ShowTracker.Controllers
             {
                 await showServices.SaveEditShow(show);
 
-                return RedirectToAction("Index", nameof(Show), new { id = show.Id, seasonNumber = 1 });
+                return RedirectToAction(nameof(Show), nameof(Show), new { id = show.Id, seasonNumber = 1 });
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 TempData["ErrorMessage"] = "An error occurred while adding a season to the show.";
-                return RedirectToAction("Index", nameof(Show), new { id = show.Id, seasonNumber = 1 });
+                return RedirectToAction(nameof(Show), nameof(Show), new { id = show.Id, seasonNumber = 1 });
             }
 
         }
@@ -45,7 +45,7 @@ namespace ShowTracker.Controllers
         {
             Show? show = await showServices.GetShowWithDetails(id);
 
-            if (show is null) 
+            if (show is null)
             {
                 return NotFound();
             }
@@ -53,24 +53,24 @@ namespace ShowTracker.Controllers
             if (show.Seasons.Count() < 1)
             {
                 TempData["ErrorMessage"] = "The show doesn't have any seasons to delete.";
-                return RedirectToAction("Index", nameof(Show), new { id = show.Id, seasonNumber = 1 });
+                return RedirectToAction(nameof(Show), nameof(Show), new { id = show.Id, seasonNumber = 1 });
             }
             else if (show.Seasons.Count() == 1)
             {
                 TempData["ErrorMessage"] = "Cannot delete the only season. Delete the show instead.";
-                return RedirectToAction("Index", nameof(Show), new { id = show.Id, seasonNumber = 1 });
+                return RedirectToAction(nameof(Show), nameof(Show), new { id = show.Id, seasonNumber = 1 });
             }
 
             try
             {
                 await showServices.RemoveLastSeasonFromShow(show, count);
-                return RedirectToAction("Index", nameof(Show), new { id = show.Id, seasonNumber = 1 });
+                return RedirectToAction(nameof(Show), nameof(Show), new { id = show.Id, seasonNumber = 1 });
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 TempData["ErrorMessage"] = "An error occurred while adding a season to the show.";
-                return RedirectToAction("Index", nameof(Show), new { id = show.Id, seasonNumber = 1 });
+                return RedirectToAction(nameof(Show), nameof(Show), new { id = show.Id, seasonNumber = 1 });
             }
         }
     }
