@@ -1,0 +1,50 @@
+﻿@using ShowTracker.Data.Models
+@using ShowTracker.Services.Core.Interfaces
+@using ShowTracker.ViewModel.ShowsViewModel
+@using System.Security.Claims
+
+
+@model IEnumerable<MyShowsViewModel>
+@inject IEpisodeServices episodeServices
+
+@{
+    ViewBag.Title = "My Shows";
+    string userIdString = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+
+    bool guidTryparse = Guid.TryParse(userIdString, out Guid parsedUserIdr);
+
+    Guid userId = Guid.Empty;
+
+    if (guidTryparse) 
+    {
+        userId = parsedUserIdr;
+    }
+}
+
+<h2 class="page-title">My Shows</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Watched episodes</th>
+            <th>Total episodes</th>
+            <th>Followed On</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (MyShowsViewModel show in Model)
+        {
+            <tr>
+                <td>@show.Name</td>
+                <td>
+                    <span class="pending-badge">@await episodeServices.TotalEpisodesOfShowWatchedAsync(show.Id,userId)<span>
+                </td> 
+                <td>
+                    <span class="pending-badge">@show.TotalEpisodes</span>
+                </td>
+                <td>@show.FollowedOn!.Value.ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>

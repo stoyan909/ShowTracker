@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace ShowTracker.Data.Models
+﻿namespace ShowTracker.Data.Models
 {
     public class UsersShows
     {
@@ -11,5 +9,7 @@ namespace ShowTracker.Data.Models
         public Guid ShowId { get; set; }
 
         public virtual Show Show { get; set; } = null!;
+
+        public DateTime? FollowedDate { get; set; }
     }
 }

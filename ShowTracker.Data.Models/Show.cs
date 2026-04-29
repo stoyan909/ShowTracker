@@ -18,8 +18,6 @@ namespace ShowTracker.Data.Models
         [MaxLength(ShowDescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
-        public bool IsFavorite { get; set; }
-
         public virtual ICollection<UsersShows> Users { get; set; } = null!;
         public virtual ICollection<Season> Seasons { get; set; } = new HashSet<Season>();
 

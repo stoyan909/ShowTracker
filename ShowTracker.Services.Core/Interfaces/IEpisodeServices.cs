@@ -5,6 +5,8 @@ namespace ShowTracker.Services.Core.Interfaces
 {
     public interface IEpisodeServices
     {
+        Task<int> TotalEpisodesOfShowWatchedAsync(Guid showId, Guid userId);
+
         Task SaveEpisodeChanges(Episode episode);
 
         Task WatchedEpisode(int id, Guid userId, bool hasWatched);

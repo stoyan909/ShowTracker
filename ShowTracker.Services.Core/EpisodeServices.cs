@@ -82,5 +82,15 @@ namespace ShowTracker.Services.Core
             dbContext.Episodes.Update(episode);
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task<int> TotalEpisodesOfShowWatchedAsync(Guid showId, Guid userId)
+        {
+            return await dbContext.Episodes.Include(e => e.Season)
+                .ThenInclude(s => s.Show)
+                .Include(e => e.Users)
+                .Where(e => e.Season.ShowId == showId)
+                .Where(e => e.Users.Any(u => u.UserId == userId)).CountAsync();
+                
+        }
     }
 }

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using ShowTracker.Data;
 using ShowTracker.Data.Models;
 using ShowTracker.Services.Core.Interfaces;
-using ShowTracker.ViewModel.ShowsViewModel;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 
@@ -50,7 +49,8 @@ namespace ShowTracker.Services.Core
                 UsersShows usersShows = new UsersShows
                 {
                     UserId = userId,
-                    ShowId = showId
+                    ShowId = showId,
+                    FollowedDate = DateTime.Now
                 };
 
                 await SaveNewUserShowToDataBase(usersShows);
@@ -185,6 +185,11 @@ namespace ShowTracker.Services.Core
         public async Task<bool> UserShowContainsGivenShow(Guid userId, Guid showId)
         {
             return await dbContext.UsersShows.AnyAsync(us => us.UserId == userId && us.ShowId == showId);
+        }
+
+        public async Task<IEnumerable<UsersShows>> GetUsersShowsAsync(Guid userId)
+        {
+           return await dbContext.UsersShows.Where(us => us.UserId == userId).ToListAsync();
         }
     }
 }

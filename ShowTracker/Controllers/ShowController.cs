@@ -60,5 +60,37 @@ namespace ShowTracker.Controllers
 
             return Redirect(returnUrl);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> MyShows() 
+        {
+            Guid userId = GetUserId();
+
+            List<MyShowsViewModel> myShowsCollection = new List<MyShowsViewModel>();
+
+            IEnumerable<UsersShows> userShowsCollection = await showServices.GetUsersShowsAsync(userId);
+            //TODO kogato userShowsCollection = 0 da vrushta drug View
+            foreach (UsersShows userShow in userShowsCollection) 
+            {
+                Show? show = await showServices.GetShowWithDetails(userShow.ShowId);
+
+                if (show is null)
+                {
+                    return NotFound();
+                }
+
+                MyShowsViewModel myShow = new MyShowsViewModel()
+                {
+                    Id = show.Id,
+                    Name = show.Name,
+                    FollowedOn = userShow.FollowedDate != null ? userShow.FollowedDate : null,
+                    TotalEpisodes = show.Seasons.SelectMany(s => s.Episodes).Count()
+                };
+
+                myShowsCollection.Add(myShow);
+            }
+
+            return View(myShowsCollection);
+        }
     }
 }

@@ -49,10 +49,6 @@ namespace ShowTracker.Data
                 .HasForeignKey(ue => ue.EpisodeId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Show>()
-                .Property(s => s.IsFavorite)
-                .HasDefaultValue(false);
-
             modelBuilder.Entity<Season>()
                 .Property(s => s.SeasonNumber)
                 .HasDefaultValue(1);

@@ -6,6 +6,7 @@ namespace ShowTracker.Services.Core.Interfaces
     public interface IShowServices
     {
         Task<IEnumerable<Show>> GetAllShowWithDetailsAsync();
+
         Task<Show?> GetShowWithDetails(Guid id);
 
         Task<bool> ShowExistInDatabase(Guid id);
@@ -35,5 +36,7 @@ namespace ShowTracker.Services.Core.Interfaces
         Show AddNewSeasonToShow(Show show, int count);
 
         Task RemoveLastSeasonFromShow(Show show, int count);
+
+        Task<IEnumerable<UsersShows>> GetUsersShowsAsync(Guid userId);
     }
 }
