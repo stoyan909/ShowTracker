@@ -28,6 +28,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowTracker.Mapping", "..\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowTracker.Infrastructures", "..\ShowTracker.Infrastructures\ShowTracker.Infrastructures.csproj", "{BA890F33-8AE6-4303-A64F-42263385C45A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5D4972BB-5998-41FF-9A30-47FB843CC877}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowTracker.Services.Tests", "..\ShowTracker.Services.Tests\ShowTracker.Services.Tests.csproj", "{371282CC-A83D-4CE8-94CD-D6E85230D7D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +70,10 @@ Global
 		{BA890F33-8AE6-4303-A64F-42263385C45A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA890F33-8AE6-4303-A64F-42263385C45A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA890F33-8AE6-4303-A64F-42263385C45A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{371282CC-A83D-4CE8-94CD-D6E85230D7D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{371282CC-A83D-4CE8-94CD-D6E85230D7D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{371282CC-A83D-4CE8-94CD-D6E85230D7D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{371282CC-A83D-4CE8-94CD-D6E85230D7D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,5 +86,6 @@ Global
 		{340B7912-10D4-40C6-A741-1324F106B8A4} = {069E432E-B5B9-415B-AFE6-04053D6A231E}
 		{BAF50615-967C-4A95-B797-E5EA1FF1BA3E} = {61B916D9-EB58-4C8B-AB35-B63F4519528E}
 		{BA890F33-8AE6-4303-A64F-42263385C45A} = {069E432E-B5B9-415B-AFE6-04053D6A231E}
+		{371282CC-A83D-4CE8-94CD-D6E85230D7D7} = {5D4972BB-5998-41FF-9A30-47FB843CC877}
 	EndGlobalSection
 EndGlobal
