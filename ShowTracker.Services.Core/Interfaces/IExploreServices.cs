@@ -4,7 +4,7 @@ namespace ShowTracker.Services.Core.Interfaces
 {
     public interface IExploreServices
     {
-        Task<List<Show>> GetAllShowsAsync();
-        Task<List<Show>> GetShowAsync(string showTitle);
+        Task<IEnumerable<Show>> GetAllShowsAsync();
+        Task<IEnumerable<Show>> GetShowAsync(string showTitle);
     }
 }

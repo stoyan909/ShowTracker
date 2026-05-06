@@ -31,9 +31,9 @@ namespace ShowTracker.Controllers
                 return RedirectToAction("Index","Home");
             }
 
-            List<Show> shows = await exploreServices.GetShowAsync(input);
+            IEnumerable<Show> shows = await exploreServices.GetShowAsync(input);
 
-            if(shows.Count == 0)
+            if(shows.Count() == 0)
             {
                 TempData["ErrorMessage"] = "No shows found with that title.";
                 return RedirectToAction("Index", "Home");
