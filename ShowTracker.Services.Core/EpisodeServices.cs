@@ -34,9 +34,9 @@ namespace ShowTracker.Services.Core
             return episode;
         }
 
-        public Task<bool> EpisodeAlreadyWatchedByUser(int id, Guid userId)
+        public async Task<bool> EpisodeAlreadyWatchedByUser(int id, Guid userId)
         {
-            return dbContext.UsersEpisodes.AnyAsync(ue => ue.EpisodeId == id && ue.UserId == userId);
+            return await dbContext.UsersEpisodes.AnyAsync(ue => ue.EpisodeId == id && ue.UserId == userId);
         }
 
         public async Task<bool> EpisodeExistInDatabase(int id)
@@ -50,12 +50,20 @@ namespace ShowTracker.Services.Core
                 .Include(e => e.Season)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == id);
-                
+
         }
 
         public async Task WatchedEpisode(int id, Guid userId, bool hasWatched)
         {
-            if (!hasWatched)
+            if (hasWatched)
+            {
+
+                UserEpisodes userEpisode = dbContext.UsersEpisodes.FirstOrDefault(ue => ue.EpisodeId == id && ue.UserId == userId)!;
+
+                dbContext.UsersEpisodes.Remove(userEpisode);
+                await dbContext.SaveChangesAsync();
+            }
+            else
             {
                 UserEpisodes userEpisode = new UserEpisodes()
                 {
@@ -64,14 +72,6 @@ namespace ShowTracker.Services.Core
                 };
 
                 dbContext.UsersEpisodes.Add(userEpisode);
-                await dbContext.SaveChangesAsync();
-            }
-            else 
-            {
-                UserEpisodes userEpisode = dbContext.UsersEpisodes
-                    .FirstOrDefault(ue => ue.EpisodeId == id && ue.UserId == userId)!;
-
-                dbContext.UsersEpisodes.Remove(userEpisode);
                 await dbContext.SaveChangesAsync();
             }
 
@@ -90,7 +90,7 @@ namespace ShowTracker.Services.Core
                 .Include(e => e.Users)
                 .Where(e => e.Season.ShowId == showId)
                 .Where(e => e.Users.Any(u => u.UserId == userId)).CountAsync();
-                
+
         }
     }
 }
