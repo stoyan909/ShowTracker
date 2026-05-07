@@ -11,10 +11,12 @@ namespace ShowTracker.Areas.Admin.Controllers
     {
         private readonly IShowServices showServices;
         private readonly IMapper mapper;
-        public ShowController(IShowServices showServices, IMapper mapper)
+        private readonly IAdminServices adminServices;
+        public ShowController(IShowServices showServices, IMapper mapper, IAdminServices adminServices)
         {
             this.showServices = showServices;
             this.mapper = mapper;
+            this.adminServices = adminServices;
         }
         public async Task<IActionResult> Index()
         {
@@ -68,11 +70,11 @@ namespace ShowTracker.Areas.Admin.Controllers
 
             Show show = mapper.Map<Show>(model);
 
-            show = showServices.AddMultipleSeasonToShow(show, model.SeasonNumber);
+            show = adminServices.AddMultipleSeasonToShow(show, model.SeasonNumber);
 
-            await showServices.GeneratePictureForShow(model.ShowPictureFile, show.Name, show.Id.ToString());
+            await adminServices.GeneratePictureForShow(model.ShowPictureFile, show.Name, show.Id.ToString());
 
-            await showServices.SaveNewShow(show);
+            await adminServices.SaveNewShow(show);
 
             return RedirectToAction(nameof(Show), nameof(Show), new { id = show.Id, seasonNumber = 1});
         }
@@ -109,9 +111,9 @@ namespace ShowTracker.Areas.Admin.Controllers
 
             if (model.ShowPictureFile != null || show.Name != model.Name)
             {
-                showServices.DeleteShowPicture(show);
+                adminServices.DeleteShowPicture(show);
 
-                await showServices.GeneratePictureForShow(model.ShowPictureFile, model.Name, model.Id.ToString());
+                await adminServices.GeneratePictureForShow(model.ShowPictureFile, model.Name, model.Id.ToString());
             }
 
             int count = HelperMethods.GetSeasonDifference(show.Seasons.Count(), model.SeasonNumber);
@@ -129,7 +131,7 @@ namespace ShowTracker.Areas.Admin.Controllers
 
             try
             {
-                await showServices.SaveEditShow(show);
+                await adminServices.SaveEditShow(show);
 
                 return RedirectToAction(nameof(Show), new { id = show.Id, seasonNumber = 1 });
             }

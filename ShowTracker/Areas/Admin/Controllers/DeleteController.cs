@@ -10,11 +10,13 @@ namespace ShowTracker.Areas.Admin.Controllers
     public class DeleteController : BaseController
     {
         private readonly IShowServices showServices;
+        private readonly IAdminServices adminServices;
         private readonly IEpisodeServices episodeServices;
-        public DeleteController(IShowServices showServices, IEpisodeServices episodeServices)
+        public DeleteController(IShowServices showServices, IEpisodeServices episodeServices, IAdminServices adminServices)
         {
             this.showServices = showServices;
             this.episodeServices = episodeServices;
+            this.adminServices = adminServices;
         }
 
         [HttpGet]
@@ -46,11 +48,11 @@ namespace ShowTracker.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            showServices.DeleteShowPicture(show);
+            adminServices.DeleteShowPicture(show);
 
             try
             {
-                await showServices.DeleteShow(show);
+                await adminServices.DeleteShow(show);
                 return RedirectToAction(nameof(ExploreController.Index), nameof(Show));
             }
             catch (Exception e)

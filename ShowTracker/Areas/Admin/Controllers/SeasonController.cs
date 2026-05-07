@@ -7,9 +7,11 @@ namespace ShowTracker.Areas.Admin.Controllers
     public class SeasonController : BaseController
     {
         private readonly IShowServices showServices;
-        public SeasonController(IShowServices showServices)
+        private readonly IAdminServices adminServices;
+        public SeasonController(IShowServices showServices, IAdminServices adminServices)
         {
             this.showServices = showServices;
+            this.adminServices = adminServices;
         }
 
         [HttpGet]
@@ -23,11 +25,11 @@ namespace ShowTracker.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            show = showServices.AddNewSeasonToShow(show, count);
+            show = adminServices.AddNewSeasonToShow(show, count);
 
             try
             {
-                await showServices.SaveEditShow(show);
+                await adminServices.SaveEditShow(show);
 
                 return RedirectToAction(nameof(Show), nameof(Show), new { id = show.Id, seasonNumber = 1 });
             }
@@ -63,7 +65,7 @@ namespace ShowTracker.Areas.Admin.Controllers
 
             try
             {
-                await showServices.RemoveLastSeasonFromShow(show, count);
+                await adminServices.RemoveLastSeasonFromShow(show, count);
                 return RedirectToAction(nameof(Show), nameof(Show), new { id = show.Id, seasonNumber = 1 });
             }
             catch (Exception e)
