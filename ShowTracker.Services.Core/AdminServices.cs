@@ -87,36 +87,37 @@ namespace ShowTracker.Services.Core
             await dbContext.SaveChangesAsync();
         }
 
-        public Show AddMultipleSeasonToShow(Show show, int seasons)
+        public Show AddMultipleSeasonToShow(Show show, int seasons, bool showExist)
         {
-            for (int i = 1; i <= seasons; i++)
+            if (!showExist) 
             {
-                show.Seasons.Add(new Season()
+                for (int i = 1; i <= seasons; i++)
                 {
-                    Id = Guid.NewGuid(),
-                    SeasonNumber = i,
-                    ShowId = show.Id
-                });
-            }
-
-            return show;
-        }
-
-        public Show AddNewSeasonToShow(Show show, int count)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                show.Seasons.Add(
-                    new Season()
+                    show.Seasons.Add(new Season()
                     {
-                        ShowId = show.Id,
-                        SeasonNumber = show.Seasons.Count + 1
+                        Id = Guid.NewGuid(),
+                        SeasonNumber = i,
+                        ShowId = show.Id
                     });
+                }
             }
+
+            else
+            {
+                for (int i = 1; i <= seasons; i++) 
+                {
+                    show.Seasons.Add(new Season()
+                    {
+                        SeasonNumber = show.Seasons.Count() + 1,
+                        ShowId = show.Id
+                    });
+                }
+            }
+
             return show;
         }
 
-        public async Task<IEnumerable<ApplicationUser>> GetAllUsersAsync(Guid userId)
+        public async Task<IEnumerable<ApplicationUser>> GetAllUsersExceptCurrentUserAsync(Guid userId)
         {
             return await dbContext.Users.Where(u => u.Id != userId).ToListAsync();
         }

@@ -16,13 +16,11 @@ namespace ShowTracker.Services.Core.Interfaces
 
         void DeleteShowPicture(Show show);
 
-        Show AddNewSeasonToShow(Show show, int count);
-
-        Show AddMultipleSeasonToShow(Show show, int seasons);
+        Show AddMultipleSeasonToShow(Show show, int seasons, bool showExist);
 
         Task DeleteShow(Show show);
 
-        Task<IEnumerable<ApplicationUser>> GetAllUsersAsync(Guid userId);
+        Task<IEnumerable<ApplicationUser>> GetAllUsersExceptCurrentUserAsync(Guid userId);
 
         Task<IEnumerable<string>> GetRolesAsync(ApplicationUser applicationUser);
 

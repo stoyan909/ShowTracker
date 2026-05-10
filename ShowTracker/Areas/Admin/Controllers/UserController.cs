@@ -27,7 +27,7 @@ namespace ShowTracker.Areas.Admin.Controllers
         {
             Guid userId = GetUserId();
 
-            IEnumerable<ApplicationUser> userList = await adminServices.GetAllUsersAsync(userId);
+            IEnumerable<ApplicationUser> userList = await adminServices.GetAllUsersExceptCurrentUserAsync(userId);
 
             IEnumerable<UsersAndRolesViewModel> usersAndRoles = mapper.Map<IEnumerable<UsersAndRolesViewModel>>(userList);
 

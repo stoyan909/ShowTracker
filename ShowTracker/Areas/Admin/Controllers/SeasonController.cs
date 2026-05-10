@@ -20,12 +20,14 @@ namespace ShowTracker.Areas.Admin.Controllers
 
             Show? show = await showServices.GetShowWithDetails(id);
 
-            if (show is null)
+            bool showExists = await showServices.ShowExistInDatabase(id);
+
+            if (show is null || !showExists)
             {
                 return NotFound();
             }
 
-            show = adminServices.AddNewSeasonToShow(show, count);
+            show = adminServices.AddMultipleSeasonToShow(show, count, showExists);
 
             try
             {

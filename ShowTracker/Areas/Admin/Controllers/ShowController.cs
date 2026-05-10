@@ -70,7 +70,7 @@ namespace ShowTracker.Areas.Admin.Controllers
 
             Show show = mapper.Map<Show>(model);
 
-            show = adminServices.AddMultipleSeasonToShow(show, model.SeasonNumber);
+            show = adminServices.AddMultipleSeasonToShow(show, model.SeasonNumber, showExist);
 
             await adminServices.GeneratePictureForShow(model.ShowPictureFile, show.Name, show.Id.ToString());
 
@@ -120,11 +120,11 @@ namespace ShowTracker.Areas.Admin.Controllers
 
             if (count > 0)
             {
-                return RedirectToAction(nameof(SeasonController.CreateSeason), nameof(Season), new { id = show.Id, count = count });
+                return RedirectToAction(nameof(SeasonController.CreateSeason), nameof(Season), new { id = show.Id, count = count});
             }
             else if (count < 0)
             {
-                return RedirectToAction(nameof(SeasonController.DeleteSeason),  nameof(Season), new { id = show.Id, count = -count });
+                return RedirectToAction(nameof(SeasonController.DeleteSeason),  nameof(Season), new { id = show.Id, count = -count});
             }
 
             mapper.Map(model, show);
