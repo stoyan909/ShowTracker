@@ -6,6 +6,7 @@ using ShowTracker.ViewModel.EpisodesViewModel;
 
 namespace ShowTracker.Services.Tests
 {
+    [TestFixture]
     public class EpisodeServicesTests
     {
         private EpisodeServices episodeServices;

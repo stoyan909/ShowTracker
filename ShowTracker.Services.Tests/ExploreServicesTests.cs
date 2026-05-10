@@ -5,6 +5,7 @@ using ShowTracker.Services.Core;
 
 namespace ShowTracker.Services.Tests;
 
+[TestFixture]
 public class ExploreServicesTests
 {
     private ExploreServices exploreServices;
