@@ -12,6 +12,7 @@ namespace ShowTracker.Data
         {
         }
         public DbSet<Show> Shows { get; set; } = null!;
+        public DbSet<Genre> Genres { get; set; } = null!;
         public DbSet<Season> Seasons { get; set; } = null!;
         public DbSet<Episode> Episodes { get; set; } = null!;
         public DbSet<UsersShows> UsersShows { get; set; } = null!;
@@ -47,6 +48,15 @@ namespace ShowTracker.Data
                 .HasOne(ue => ue.Episode)
                 .WithMany(e => e.Users)
                 .HasForeignKey(ue => ue.EpisodeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ShowGenres>()
+                .HasKey(sg => new { sg.ShowId, sg.GenreId });
+
+            modelBuilder.Entity<ShowGenres>()
+                .HasOne(sg => sg.Show)
+                .WithMany(s => s.Genres)
+                .HasForeignKey(sg => sg.ShowId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Season>()

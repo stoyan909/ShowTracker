@@ -20,6 +20,7 @@ namespace ShowTracker.Data.Models
 
         public virtual ICollection<UsersShows> Users { get; set; } = null!;
         public virtual ICollection<Season> Seasons { get; set; } = new HashSet<Season>();
+        public virtual ICollection<ShowGenres> Genres { get; set; } = new HashSet<ShowGenres>();
 
     }
 }
