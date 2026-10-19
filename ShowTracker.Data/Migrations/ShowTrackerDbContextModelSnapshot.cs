@@ -673,6 +673,23 @@ namespace ShowTracker.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ShowTracker.Data.Models.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
+                });
+
             modelBuilder.Entity("ShowTracker.Data.Models.Season", b =>
                 {
                     b.Property<Guid>("Id")
@@ -765,6 +782,21 @@ namespace ShowTracker.Data.Migrations
                             Description = "A squad of prisoners and their guards are sent to investigate a mysterious island. They get stranded there and must rely on each other to survive the island's mysterious and monstrous residents.",
                             Name = "Hell's Paradise"
                         });
+                });
+
+            modelBuilder.Entity("ShowTracker.Data.Models.ShowGenres", b =>
+                {
+                    b.Property<Guid>("ShowId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ShowId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("ShowGenres");
                 });
 
             modelBuilder.Entity("ShowTracker.Data.Models.UserEpisodes", b =>
@@ -873,6 +905,25 @@ namespace ShowTracker.Data.Migrations
                     b.Navigation("Show");
                 });
 
+            modelBuilder.Entity("ShowTracker.Data.Models.ShowGenres", b =>
+                {
+                    b.HasOne("ShowTracker.Data.Models.Genre", "Genre")
+                        .WithMany("Shows")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShowTracker.Data.Models.Show", "Show")
+                        .WithMany("Genres")
+                        .HasForeignKey("ShowId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
+
+                    b.Navigation("Show");
+                });
+
             modelBuilder.Entity("ShowTracker.Data.Models.UserEpisodes", b =>
                 {
                     b.HasOne("ShowTracker.Data.Models.Episode", "Episode")
@@ -916,6 +967,11 @@ namespace ShowTracker.Data.Migrations
                     b.Navigation("Users");
                 });
 
+            modelBuilder.Entity("ShowTracker.Data.Models.Genre", b =>
+                {
+                    b.Navigation("Shows");
+                });
+
             modelBuilder.Entity("ShowTracker.Data.Models.Season", b =>
                 {
                     b.Navigation("Episodes");
@@ -923,6 +979,8 @@ namespace ShowTracker.Data.Migrations
 
             modelBuilder.Entity("ShowTracker.Data.Models.Show", b =>
                 {
+                    b.Navigation("Genres");
+
                     b.Navigation("Seasons");
 
                     b.Navigation("Users");
