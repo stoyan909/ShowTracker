@@ -21,5 +21,7 @@ namespace ShowTracker.Services.Core.Interfaces
         Task SaveNewUserShowToDataBase(UsersShows userShow);
 
         Task<IEnumerable<UsersShows>> GetUsersShowsAsync(Guid userId);
+
+        Task<IEnumerable<Genre>> GetGenresAsync();
     }
 }

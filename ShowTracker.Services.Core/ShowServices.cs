@@ -2,6 +2,7 @@
 using ShowTracker.Data;
 using ShowTracker.Data.Models;
 using ShowTracker.Services.Core.Interfaces;
+using System.Web.Mvc;
 
 namespace ShowTracker.Services.Core
 {
@@ -93,5 +94,11 @@ namespace ShowTracker.Services.Core
         {
            return await dbContext.UsersShows.Where(us => us.UserId == userId).ToListAsync();
         }
+
+        public async Task<IEnumerable<Genre>> GetGenresAsync()
+        {
+            return await dbContext.Genres.ToListAsync();
+        }
     }
+    
 }

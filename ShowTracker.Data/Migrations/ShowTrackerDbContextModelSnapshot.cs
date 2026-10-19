@@ -688,6 +688,43 @@ namespace ShowTracker.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Action"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Mystery"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Thriller"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "History"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Adventure"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Horror"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Survival"
+                        });
                 });
 
             modelBuilder.Entity("ShowTracker.Data.Models.Season", b =>

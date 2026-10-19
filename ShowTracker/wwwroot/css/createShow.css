@@ -94,3 +94,25 @@ textarea.form-control {
     .btn-cancel:hover {
         background: #94a3b8;
     }
+
+.genre-select {
+    min-height: 42px;
+    height: auto;
+    background-color: #ffffff;
+    color: #34495e;
+    cursor: pointer;
+}
+
+    .genre-select:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+    }
+
+    .genre-select option {
+        padding: 10px;
+    }
+
+        .genre-select option:checked {
+            background: #4a90e2 linear-gradient(0deg, #4a90e2 0%, #4a90e2 100%);
+            color: white;
+        }

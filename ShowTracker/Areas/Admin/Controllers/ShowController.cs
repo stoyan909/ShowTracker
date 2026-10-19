@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ShowTracker.Common;
 using ShowTracker.Data.Models;
 using ShowTracker.Services.Core.Interfaces;
@@ -44,9 +45,13 @@ namespace ShowTracker.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateShow()
+        public async Task<IActionResult> CreateShow()
         {
             CreateShowViewModel model = new CreateShowViewModel();
+           
+            var genres = await showServices.GetGenresAsync();
+
+            model.Genres = mapper.Map<List<SelectListItem>>(genres);
 
             return View(model);
         }
@@ -54,6 +59,10 @@ namespace ShowTracker.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateShow(CreateShowViewModel model)
         {
+            var genres = await showServices.GetGenresAsync();
+
+            model.Genres = mapper.Map<List<SelectListItem>>(genres);
+
             if (!ModelState.IsValid)
             {
                 return View(model);
