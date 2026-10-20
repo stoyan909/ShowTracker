@@ -20,6 +20,8 @@ namespace ShowTracker.Services.Core.Interfaces
 
         Task DeleteShow(Show show);
 
+        Show PopulateShowsGenres(Show show, List<int> selectedGenres);
+
         Task<IEnumerable<ApplicationUser>> GetAllUsersExceptCurrentUserAsync(Guid userId);
 
         Task<IEnumerable<string>> GetRolesAsync(ApplicationUser applicationUser);

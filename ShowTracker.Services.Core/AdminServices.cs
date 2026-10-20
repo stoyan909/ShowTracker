@@ -89,7 +89,7 @@ namespace ShowTracker.Services.Core
 
         public Show AddMultipleSeasonToShow(Show show, int seasons, bool showExist)
         {
-            if (!showExist) 
+            if (!showExist)
             {
                 for (int i = 1; i <= seasons; i++)
                 {
@@ -104,7 +104,7 @@ namespace ShowTracker.Services.Core
 
             else
             {
-                for (int i = 1; i <= seasons; i++) 
+                for (int i = 1; i <= seasons; i++)
                 {
                     show.Seasons.Add(new Season()
                     {
@@ -133,9 +133,9 @@ namespace ShowTracker.Services.Core
         {
             List<UsersAndRolesViewModel> listOfUser = new List<UsersAndRolesViewModel>();
 
-            foreach (var user in users) 
+            foreach (var user in users)
             {
-                 UsersAndRolesViewModel userAndRolesViewModel = new UsersAndRolesViewModel()
+                UsersAndRolesViewModel userAndRolesViewModel = new UsersAndRolesViewModel()
                 {
                     Email = user.Email,
                     Id = user.Id,
@@ -146,6 +146,19 @@ namespace ShowTracker.Services.Core
             }
 
             return listOfUser;
+        }
+
+        public Show PopulateShowsGenres(Show show, List<int> selectedGenres)
+        {
+            show.Genres = selectedGenres
+          .Select(id => new ShowGenres
+          {
+              ShowId = show.Id,
+              GenreId = id
+          })
+          .ToList();
+
+            return show;
         }
     }
 }

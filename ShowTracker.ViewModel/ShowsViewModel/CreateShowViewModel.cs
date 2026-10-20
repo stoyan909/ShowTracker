@@ -23,9 +23,11 @@ namespace ShowTracker.ViewModel.ShowsViewModel
         [Display(Name = "Seasons")]
         public int SeasonNumber { get; set; } = 1;
 
+        public List<SelectListItem> Genres { get; set; } = new List<SelectListItem>();
+
         [Required]
         [Display(Name = "Genres")]
-        public List<SelectListItem> Genres { get; set; } = new List<SelectListItem>();
+        public List<int>SelectedGenres { get; set; } = new List<int>();
 
         [Display(Name = "Show picture")]
         public IFormFile? ShowPictureFile { get; set; }

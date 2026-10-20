@@ -58,13 +58,12 @@ namespace ShowTracker.Areas.Admin.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateShow(CreateShowViewModel model)
-        {
+        { 
             var genres = await showServices.GetGenresAsync();
-
-            model.Genres = mapper.Map<List<SelectListItem>>(genres);
 
             if (!ModelState.IsValid)
             {
+                model.Genres = mapper.Map<List<SelectListItem>>(genres);
                 return View(model);
             }
 
@@ -74,10 +73,15 @@ namespace ShowTracker.Areas.Admin.Controllers
             {
                 ModelState.Clear();
                 ModelState.AddModelError("Name", "This show already exists");
-                return View(nameof(CreateShow), new CreateShowViewModel());
-            }
+                
+                var newModel = new CreateShowViewModel();
+                newModel.Genres = mapper.Map<List<SelectListItem>>(genres);
+
+                return View(nameof(CreateShow), newModel);            }
 
             Show show = mapper.Map<Show>(model);
+
+            show = adminServices.PopulateShowsGenres(show, model.SelectedGenres);
 
             show = adminServices.AddMultipleSeasonToShow(show, model.SeasonNumber, showExist);
 
