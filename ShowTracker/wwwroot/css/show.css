@@ -245,3 +245,26 @@
         .unwatched-btn button:hover {
             background: #9370DB;
         }
+/* SHOW GENRES */
+.genre-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0 15px;
+}
+
+.genre-badge {
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+    .genre-badge:not(:last-child)::after {
+        content: "•";
+        margin-left: 8px;
+        color: #475569;
+    }

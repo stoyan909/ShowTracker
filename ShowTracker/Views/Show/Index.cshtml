@@ -38,23 +38,31 @@
 
         <div class="show-info">
             <h1>@Model.Name</h1>
+
+            <div class="genre-list">
+                @foreach (var genre in Model.Genres)
+                {
+                    <span class="genre-badge">@genre.Genre.Name</span>
+                }
+            </div>
+
             <p>@Model.Description</p>
 
             @if (Model.Users.Any(u => u.UserId == userId))
             {
                 <a class="follow-btn"
-                   asp-controller="Show"
-                   asp-action="FollowShow"
-                   asp-route-id="@Model.Id">
+                       asp-controller="Show"
+                       asp-action="FollowShow"
+                       asp-route-id="@Model.Id">
                     Unfollow
                 </a>
             }
             else
             {
                 <a class="follow-btn"
-                   asp-controller="Show"
-                   asp-action="FollowShow"
-                   asp-route-id="@Model.Id">
+                       asp-controller="Show"
+                       asp-action="FollowShow"
+                       asp-route-id="@Model.Id">
                     Follow
                 </a>
             }

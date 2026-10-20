@@ -50,6 +50,8 @@ namespace ShowTracker.Services.Core
             Show? show = await dbContext.Shows
                .Where(s => s.Id == id)
                .Include(s => s.Users)
+               .Include(s=>s.Genres)
+               .ThenInclude(g => g.Genre)
                .Include(s => s.Seasons)
                .ThenInclude(s => s.Episodes)
                .ThenInclude(e => e.Users)
