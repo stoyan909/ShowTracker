@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using ShowTracker.Data.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 using static ShowTracker.Common.ValidationConstants.ShowsValidationConstants;
 
 namespace ShowTracker.ViewModel.ShowsViewModel
@@ -25,10 +26,11 @@ namespace ShowTracker.ViewModel.ShowsViewModel
         [Display(Name = "Season")]
         public int SeasonNumber { get; set; }
 
-        public List<int> SelectedGenreIds { get; set; } = new();
+        public List<ShowGenres> Genres { get; set; } = new List<ShowGenres>();
 
-        public IEnumerable<SelectListItem> Genres { get; set; }
-            = new List<SelectListItem>();
+        [Required]
+        [Display(Name = "Genres")]
+        public List<int> SelectedGenres { get; set; } = new List<int>();
 
         [Display(Name = "Show picture")]
         public IFormFile? ShowPictureFile { get; set; }

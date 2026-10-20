@@ -39,7 +39,7 @@
             <label asp-for="SelectedGenres">Genres</label>
 
             <select asp-for="SelectedGenres"
-                    asp-items="Model.Genres"
+                    asp-items="@(new SelectList(Model.Genres, "GenreId", "Genre.Name"))"
                     class="form-control genre-select"
                     size="1"
                     multiple>

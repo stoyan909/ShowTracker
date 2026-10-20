@@ -51,7 +51,7 @@ namespace ShowTracker.Areas.Admin.Controllers
            
             var genres = await showServices.GetGenresAsync();
 
-            model.Genres = mapper.Map<List<SelectListItem>>(genres);
+            model.Genres = mapper.Map<List<ShowGenres>>(genres);
 
             return View(model);
         }
@@ -63,7 +63,7 @@ namespace ShowTracker.Areas.Admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                model.Genres = mapper.Map<List<SelectListItem>>(genres);
+                model.Genres = mapper.Map<List<ShowGenres>>(genres);
                 return View(model);
             }
 
@@ -75,7 +75,7 @@ namespace ShowTracker.Areas.Admin.Controllers
                 ModelState.AddModelError("Name", "This show already exists");
                 
                 var newModel = new CreateShowViewModel();
-                newModel.Genres = mapper.Map<List<SelectListItem>>(genres);
+                newModel.Genres = mapper.Map<List<ShowGenres>>(genres);
 
                 return View(nameof(CreateShow), newModel);            }
 
@@ -103,6 +103,10 @@ namespace ShowTracker.Areas.Admin.Controllers
             }
 
             EditShowViewModel model = mapper.Map<EditShowViewModel>(show);
+
+            var allGenres = await showServices.GetGenresAsync();
+
+            model = adminServices.PopulateEditShowViewModel(model, show, allGenres);
 
             return View(model);
         }

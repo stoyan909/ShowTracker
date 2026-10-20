@@ -12,9 +12,9 @@ namespace ShowTracker.Mapping
             CreateMap<CreateShowViewModel, Show>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
 
-            CreateMap<Genre, SelectListItem>()
-                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id.ToString()))
-                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name));
+            CreateMap<Genre, ShowGenres>()
+                .ForMember(dest => dest.GenreId, opt => opt.MapFrom(src => src.Id))
+                .ForPath(dest => dest.Genre.Name, opt => opt.MapFrom(src => src.Name));
         }
     }
 }

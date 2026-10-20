@@ -5,6 +5,7 @@ using ShowTracker.Data;
 using ShowTracker.Data.Models;
 using ShowTracker.Services.Core.Interfaces;
 using ShowTracker.ViewModel.Admin;
+using ShowTracker.ViewModel.ShowsViewModel;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 
@@ -151,14 +152,31 @@ namespace ShowTracker.Services.Core
         public Show PopulateShowsGenres(Show show, List<int> selectedGenres)
         {
             show.Genres = selectedGenres
-          .Select(id => new ShowGenres
-          {
-              ShowId = show.Id,
-              GenreId = id
-          })
-          .ToList();
+              .Select(id => new ShowGenres
+              {
+                  ShowId = show.Id,
+                  GenreId = id
+              })
+              .ToList();
 
             return show;
+        }
+
+        public EditShowViewModel PopulateEditShowViewModel(EditShowViewModel model,Show show,IEnumerable<Genre> allGenres)
+        {
+            model.Genres = allGenres
+                .Select(g => new ShowGenres
+                {
+                    GenreId = g.Id,
+                    Genre = g
+                })
+                .ToList();
+
+            model.SelectedGenres = show.Genres
+                .Select(g => g.GenreId)
+                .ToList();
+
+            return model;
         }
     }
 }

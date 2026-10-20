@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using ShowTracker.Data.Models;
 using ShowTracker.ViewModel.Admin;
+using ShowTracker.ViewModel.ShowsViewModel;
 
 namespace ShowTracker.Services.Core.Interfaces
 {
@@ -27,5 +28,7 @@ namespace ShowTracker.Services.Core.Interfaces
         Task<IEnumerable<string>> GetRolesAsync(ApplicationUser applicationUser);
 
         IEnumerable<UsersAndRolesViewModel> GetUsersWithRoles(IEnumerable<ApplicationUser> users, IEnumerable<string> roles);
+
+        EditShowViewModel PopulateEditShowViewModel(EditShowViewModel model, Show show, IEnumerable<Genre> allGenres);
     }
 }
