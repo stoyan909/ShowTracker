@@ -30,5 +30,7 @@ namespace ShowTracker.Services.Core.Interfaces
         IEnumerable<UsersAndRolesViewModel> GetUsersWithRoles(IEnumerable<ApplicationUser> users, IEnumerable<string> roles);
 
         EditShowViewModel PopulateEditShowViewModel(EditShowViewModel model, Show show, IEnumerable<Genre> allGenres);
+
+        Show UpdateShowGenres(Show show, List<int> selectedGenres);
     }
 }

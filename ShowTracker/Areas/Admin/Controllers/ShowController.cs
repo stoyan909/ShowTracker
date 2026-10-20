@@ -146,6 +146,8 @@ namespace ShowTracker.Areas.Admin.Controllers
 
             mapper.Map(model, show);
 
+            show =  adminServices.UpdateShowGenres(show, model.SelectedGenres);
+
             try
             {
                 await adminServices.SaveEditShow(show);

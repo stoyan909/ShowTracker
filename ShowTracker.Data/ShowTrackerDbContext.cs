@@ -17,6 +17,7 @@ namespace ShowTracker.Data
         public DbSet<Episode> Episodes { get; set; } = null!;
         public DbSet<UsersShows> UsersShows { get; set; } = null!;
         public DbSet<UserEpisodes> UsersEpisodes { get; set; } = null!;
+        public DbSet<ShowGenres> ShowGenres { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

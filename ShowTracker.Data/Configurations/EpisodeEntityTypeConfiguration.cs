@@ -238,8 +238,6 @@ namespace ShowTracker.Data.Configurations
                     ImageUrl = imageUrls[i] != null ? imageUrls[i] : null,
                     SeasonId = seasonId
                 });
-
-
             }
 
             return episodes;

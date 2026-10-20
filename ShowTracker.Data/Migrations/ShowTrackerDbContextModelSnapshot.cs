@@ -254,7 +254,7 @@ namespace ShowTracker.Data.Migrations
 
                     b.HasIndex("SeasonId");
 
-                    b.ToTable("Episodes");
+                    b.ToTable("Episodes", (string)null);
 
                     b.HasData(
                         new
@@ -687,7 +687,7 @@ namespace ShowTracker.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
 
                     b.HasData(
                         new
@@ -745,7 +745,7 @@ namespace ShowTracker.Data.Migrations
 
                     b.HasIndex("ShowId");
 
-                    b.ToTable("Seasons");
+                    b.ToTable("Seasons", (string)null);
 
                     b.HasData(
                         new
@@ -798,7 +798,7 @@ namespace ShowTracker.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Shows");
+                    b.ToTable("Shows", (string)null);
 
                     b.HasData(
                         new
@@ -833,7 +833,7 @@ namespace ShowTracker.Data.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("ShowGenres");
+                    b.ToTable("ShowGenres", (string)null);
 
                     b.HasData(
                         new
@@ -890,7 +890,7 @@ namespace ShowTracker.Data.Migrations
 
                     b.HasIndex("EpisodeId");
 
-                    b.ToTable("UsersEpisodes");
+                    b.ToTable("UsersEpisodes", (string)null);
                 });
 
             modelBuilder.Entity("ShowTracker.Data.Models.UsersShows", b =>
@@ -908,7 +908,7 @@ namespace ShowTracker.Data.Migrations
 
                     b.HasIndex("ShowId");
 
-                    b.ToTable("UsersShows");
+                    b.ToTable("UsersShows", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

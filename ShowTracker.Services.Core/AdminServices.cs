@@ -41,7 +41,21 @@ namespace ShowTracker.Services.Core
 
         public async Task SaveEditShow(Show show)
         {
-            dbContext.Shows.Update(show);
+            var existingGenres = await dbContext.ShowGenres
+                .Where(sg => sg.ShowId == show.Id)
+                .ToListAsync();
+
+            dbContext.ShowGenres.RemoveRange(existingGenres);
+
+            foreach (var genre in show.Genres)
+            {
+                dbContext.ShowGenres.Add(new ShowGenres
+                {
+                    ShowId = show.Id,
+                    GenreId = genre.GenreId
+                });
+            }
+
             await dbContext.SaveChangesAsync();
         }
 
@@ -177,6 +191,18 @@ namespace ShowTracker.Services.Core
                 .ToList();
 
             return model;
+        }
+        public Show UpdateShowGenres(Show show, List<int> selectedGenres)
+        {
+            show.Genres = selectedGenres
+                .Select(genreId => new ShowGenres
+                {
+                    ShowId = show.Id,
+                    GenreId = genreId
+                })
+                .ToList();
+
+            return show;
         }
     }
 }
