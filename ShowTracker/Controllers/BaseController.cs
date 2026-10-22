@@ -9,7 +9,17 @@ namespace ShowTracker.Controllers
     {
         protected Guid GetUserId()
         {
-            return Guid.Parse(User?.FindFirstValue(ClaimTypes.NameIdentifier));
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId is null)
+            {
+                return Guid.Empty;
+            }
+            else 
+            {
+                return Guid.Parse(userId);
+            }
+
         }
     }
 }

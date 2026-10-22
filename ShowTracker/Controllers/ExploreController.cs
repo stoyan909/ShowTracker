@@ -18,6 +18,13 @@ namespace ShowTracker.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
+            Guid userId = GetUserId();
+
+            if (userId != Guid.Empty)
+            {
+                ViewBag.RecommendedShows = await exploreServices.GetRecommendedShowsAsync(userId);
+            }
+
             return View(await exploreServices.GetAllShowsAsync());
         }        
         

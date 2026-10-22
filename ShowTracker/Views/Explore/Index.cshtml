@@ -1,66 +1,143 @@
 ﻿@using ShowTracker.Data.Models
 @using System.Security.Claims
-
 @model IEnumerable<Show>
 
 @{
-	ViewBag.Title = "Shows";
-	string userIdString = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+    ViewBag.Title = "Shows";
 
-	Guid? userId = Guid.TryParse(userIdString, out Guid parsedUserId)
-		? parsedUserId
-		: null;
+    string? userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+    Guid? userId = Guid.TryParse(userIdString, out Guid parsedUserId)
+        ? parsedUserId
+        : null;
+
+    var recommendedShows = ViewBag.RecommendedShows as IEnumerable<Show>;
+
+    string[] files = Directory.Exists("wwwroot/ShowPics/")
+        ? Directory.GetFiles("wwwroot/ShowPics/")
+        : Array.Empty<string>();
 }
 
 <link rel="stylesheet" href="~/css/explore.css" />
 
 <div class="container">
-	<div class="grid">
-		@{
-			string[] files = Directory.GetFiles("wwwroot/ShowPics/");
-		}
-		@foreach (Show show in Model)
-		{
-				<a href = "@Url.Action("Index", "Show", new{ id=show.Id ,seasonNumber=1})" class="card-link">
-					<div class="card">
-					@{
-						string imageUrl = null;
 
-						foreach (string images in files)
-						{
-							if (images.ToLower().Contains(show.Name.ToLower()) && images.ToLower().Contains(show.Id.ToString()))
-							{
-								imageUrl = images.Replace("wwwroot", "").Replace("\\", "/");
-								break;
-							}
-						}
-					}
+    @* Recommended Shows *@
+    @if (recommendedShows != null && recommendedShows.Any())
+    {
+        <section class="recommended-section">
+            <div class="recommended-header">
+                <div>
+                    <span class="recommended-label">PICKED FOR YOU</span>
+                    <h2 class="recommended-heading">Recommended Shows</h2>
+                    <p class="recommended-subtitle">
+                        Discover something new to watch.
+                    </p>
+                </div>
+            </div>
 
-						<img src="@(imageUrl ?? "/images/no-image.png")" class="poster" alt="@show.Name" />
+            <div class="grid">
+                @foreach (Show show in recommendedShows)
+                {
+                    <a href="@Url.Action("Index", "Show",
+                                                                       new { id = show.Id, seasonNumber = 1 })"
+                           class="card-link">
 
-						<div class="info">
-							<div>
-								<div class="title">@show.Name</div>
-								<div class="year">@show.Description</div>
-							</div>
-						@if (User.Identity != null && User.Identity.IsAuthenticated)
-						{
-							if (show.Users.Any(u => u.UserId == userId))
-							{
-								<a class="follow-btn" asp-controller="Show" asp-action="FollowShow" asp-route-id="@show.Id">
-									Unfollow
-								</a>
-							}
-							else
-							{
-								<a class="follow-btn" asp-controller="Show" asp-action="FollowShow" asp-route-id="@show.Id">
-									Follow
-								</a>
-							}
-						}
-							</div>
-						</div>
-					</a>
-		}
-	</div>
+                        <div class="card recommended-card">
+                            @{
+                                string? imageUrl = null;
+
+                                foreach (string image in files)
+                                {
+                                    if (image.Contains(show.Name,
+                                            StringComparison.OrdinalIgnoreCase)
+                                        && image.Contains(show.Id.ToString(),
+                                            StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        imageUrl = image.Replace("wwwroot", "")
+                                            .Replace("\\", "/");
+                                        break;
+                                    }
+                                }
+                            }
+
+                            <img src="@(imageUrl ?? "/images/no-image.png")"
+                                 class="poster"
+                                 alt="@show.Name" />
+
+                            <div class="info">
+                                <div>
+                                    <div class="title">@show.Name</div>
+                                    <div class="year">@show.Description</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </section>
+    }
+
+    @* All Shows *@
+    <section class="all-shows-section">
+        <div class="all-shows-header">
+            <h2 class="all-shows-heading">Explore All Shows</h2>
+            <p class="all-shows-subtitle">
+                Browse the complete collection.
+            </p>
+        </div>
+
+        <div class="grid">
+            @foreach (Show show in Model)
+            {
+                <a href="@Url.Action("Index", "Show",
+                                                           new { id = show.Id, seasonNumber = 1 })"
+                       class="card-link">
+
+                    <div class="card">
+                        @{
+                            string? imageUrl = null;
+
+                            foreach (string image in files)
+                            {
+                                if (image.Contains(show.Name,
+                                        StringComparison.OrdinalIgnoreCase)
+                                    && image.Contains(show.Id.ToString(),
+                                        StringComparison.OrdinalIgnoreCase))
+                                {
+                                    imageUrl = image.Replace("wwwroot", "")
+                                        .Replace("\\", "/");
+                                    break;
+                                }
+                            }
+                        }
+
+                        <img src="@(imageUrl ?? "/images/no-image.png")"
+                             class="poster"
+                             alt="@show.Name" />
+
+                        <div class="info">
+                            <div>
+                                <div class="title">@show.Name</div>
+                                <div class="year">@show.Description</div>
+                            </div>
+
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <a class="follow-btn"
+                                       asp-controller="Show"
+                                       asp-action="FollowShow"
+                                       asp-route-id="@show.Id">
+                                    @(show.Users.Any(u => u.UserId == userId)
+                                        ? "Unfollow"
+                                        : "Follow")
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </section>
+
 </div>

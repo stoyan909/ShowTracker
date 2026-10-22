@@ -6,5 +6,6 @@ namespace ShowTracker.Services.Core.Interfaces
     {
         Task<IEnumerable<Show>> GetAllShowsAsync();
         Task<IEnumerable<Show>> GetShowAsync(string showTitle);
+        Task<IEnumerable<Show>>? GetRecommendedShowsAsync(Guid userId);
     }
 }
