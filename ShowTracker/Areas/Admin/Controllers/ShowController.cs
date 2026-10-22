@@ -116,6 +116,7 @@ namespace ShowTracker.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.Genres = mapper.Map<List<ShowGenres>>(await showServices.GetGenresAsync());
                 return View(model);
             }
 
